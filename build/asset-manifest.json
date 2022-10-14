@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.be9f660e.css",
+    "main.js": "/static/js/main.38e39e9d.js",
+    "static/js/787.a7354085.chunk.js": "/static/js/787.a7354085.chunk.js",
+    "static/media/smanjenAnimiran-bezPozadine.gif": "/static/media/smanjenAnimiran-bezPozadine.13fb79163bbbd9c6d7aa.gif",
+    "static/media/logo.png": "/static/media/logo.a38c74a6a9c85f1a2055.png",
+    "static/media/pobednickoPostolje.png": "/static/media/pobednickoPostolje.f8db8a373ee6b0ba3461.png",
+    "static/media/vecOtvorenBezPozadine.png": "/static/media/vecOtvorenBezPozadine.1698a377914a03902431.png",
+    "static/media/rsz_poklonzatvorenbezpozadine.png": "/static/media/rsz_poklonzatvorenbezpozadine.f4ecdbacbff5d4a1e9df.png",
+    "static/media/loginbackground.jpg": "/static/media/loginbackground.c6b430e28d44c9ac4b61.jpg",
+    "index.html": "/index.html",
+    "main.be9f660e.css.map": "/static/css/main.be9f660e.css.map",
+    "main.38e39e9d.js.map": "/static/js/main.38e39e9d.js.map",
+    "787.a7354085.chunk.js.map": "/static/js/787.a7354085.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be9f660e.css",
+    "static/js/main.38e39e9d.js"
+  ]
+}
