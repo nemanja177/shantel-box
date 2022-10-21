@@ -2,15 +2,21 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import '../css/style.css';
-import zatvorenPoklon from '../images/rsz_poklonzatvorenbezpozadine.png';
-import animiraniPoklon from '../images/smanjenAnimiran-bezPozadine.gif';
+import zatvorenPoklon from '../images/111.png'
+// import zatvorenPoklon from '../images/rsz_poklonzatvorenbezpozadine.png';
+import animiraniPoklon from '../images/animirani2.gif'
+// import animiraniPoklon from '../images/smanjenAnimiran-bezPozadine.gif';
 import slikaOtvorenogPoklona from '../images/vecOtvorenBezPozadine.png';
+import firegif from '../images/firegif.gif';
 import postolje from '../images/pobednickoPostolje.png'
+import arrowDown from '../images/arrow_down.png'
 import Navbar from './Navbar';
+import Footer from './Footer';
+import PropTypes from 'prop-types';
 
 axios.defaults.withCredentials = true;
-const AUTH_PATH = `https://bigalslist.com:8080/box/auth`;
-const SERVER_PATH = "https://bigalslist.com:8080/box/bodovi";
+const AUTH_PATH = `https://kutija.net:8080/box/auth`;
+const SERVER_PATH = "https://kutija.net:8080/box/bodovi";
 const config = {headers: {"Authorization": `Bearer ${localStorage.getItem("access_token")}`, "Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}}
 
 function sleep(ms) {
@@ -18,14 +24,14 @@ function sleep(ms) {
 }
 
 async function delayedMessage(box) {
+  const cls = ["transparent", "small"];
   await sleep(3800);
   let points = document.getElementById("points");
   let point = document.getElementById("point");
   let opened = document.getElementById("opened");
-  points.classList.remove("hidden");
-  point.classList.remove("hidden");
-  opened.classList.remove("hidden");
-  
+  points.classList.remove(...cls);
+  point.classList.remove(...cls);
+  opened.classList.remove(...cls);
 }
 
 const validate = async() => {
@@ -65,7 +71,7 @@ export default function Dashboard() {
     const [prosliMesecBodovi, setProsliMesecBodovi] = useState([]);
     const [validated, setValidated] = useState();
 
-    const arraySrcs = [{animiraniPoklon}]
+    // const arraySrcs = [{animiraniPoklon}]
     
     const [bodovi, setBodovi] = useState(0);
     // let dobijeniBodovi = 0;
@@ -151,10 +157,13 @@ export default function Dashboard() {
       // let validated = validate();
     }, [])
     // console.log(validated);
+    // await sleep(500);
     if ( localStorage.getItem("access_token") === null || validated !== true ) {
-      console.log(localStorage.getItem('access_token') + " " + validated);
+      console.log(localStorage.getItem('access_token') + " " + validated); 
       navigate("/logout", {replace: true});
     }
+
+    // console.log({user});
     // const getValidated = async () => {
     //   let response = await axios.get(`${AUTH_PATH}/validate`)
 
@@ -170,12 +179,12 @@ export default function Dashboard() {
     // }
 
     const imageClick = async (dozvoljenPoklon) => {
+      setDozvoljenPoklon(false);
       try {
         let response = await axios.post(`${SERVER_PATH}`, config)
     
         if ( response.status === 200) {
-          dobijeniBodovi = response.data.brojBodova;
-          setDozvoljenPoklon(false);
+          dobijeniBodovi = response.data.brojBodova; 
           // dozvoljenPoklon = false;
           console.log(dobijeniBodovi);
         }
@@ -191,8 +200,8 @@ export default function Dashboard() {
         <div className='content-holder'>
           <div className='left-side'>
             {/* <h1 id="point" className="hidden">{bodovi}</h1> */}
-            <h2 id='opened' className='hidden'>Otvorili ste poklon danas. Novi vas ceka sutra!</h2>
-            <h2 id='points' className='hidden'>Cestitamo, dobili ste {bodovi} bodova!</h2>
+            <h2 id='opened' className='small transparent'>Otvorili ste poklon danas. Novi vas čeka sutra!</h2>
+            <h2 id='points' className='small transparent'>Čestitamo, dobili ste {bodovi} bodova!</h2>
             {/* {dozvoljenPoklon === false &&
               <h2>
                 Otvorili ste poklon danas. Novi vas ceka sutra!
@@ -204,7 +213,7 @@ export default function Dashboard() {
                   // console.log("DOZVOLJENO?: ", dozvoljenPoklon);
                   return (
                     <div className='imageHolder'>
-                      <img src={zatvorenPoklon} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
+                      <img className='clickable-pointer' src={zatvorenPoklon} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
                         let box = document.getElementById("box");
                         box.setAttribute('src', animiraniPoklon);
                         
@@ -218,14 +227,14 @@ export default function Dashboard() {
                         // setDozvoljenPoklon(false);
                         // this.src = {animiraniPoklon}
                       }) : null } style={{"pointerEvents": "all"}} ></img>
-                      <h1 id="point" className="hidden">{bodovi}</h1>
+                      <h1 id="point" className="transparent small">{bodovi}</h1>
                     </div>
                   )
                   
                 } else {
                     return (
                       <div>
-                        <h2>Vec ste otvorili poklon danas. Novi vas ceka sutra!</h2>
+                        <h2>Već ste otvorili poklon danas. Novi vas čeka sutra!</h2>
                         <img src={slikaOtvorenogPoklona} className='already-opened-gift' alt='otvorenPoklon'></img>
                       </div>
                     )
@@ -249,18 +258,27 @@ export default function Dashboard() {
           </div>
           <div className='right-side'>
             <div className='last-opened-holder'>
-              <h2 className='center'>Poslednji Otvoreni Pokloni</h2>
+              {/* <h2 className='center'>Poslednji Otvoreni Pokloni</h2> */}
+              <div className='flex-image-center'>
+                <img src={arrowDown} alt='poslednji otvoreni pokloni'></img>
+              </div>
                 {poslednjiOtvoreni.map((data) => {
                   return (
                     <div className='last-opened'>
+                      <img className='small-image' src={data.korisnik.slika} alt='slikaKorisnika'></img>
                       <p className='last-opened-element' key={data.id}>{data.korisnik.ime}</p>
-                      <p className='last-opened-element' key={data.id}>{data.bod.brojBodova}</p>
+                      <div className='points-gif-holder'>
+                        {data.bod.brojBodova > 80 && 
+                          <img src={firegif} className='firegif'></img>
+                        }
+                        <p className='last-opened-element element-bodovi' key={data.id}>{data.bod.brojBodova}</p>
+                      </div>
                     </div>
                   )
                 })}
             </div>
             <div className='winners-holder'>
-              <h2 className='center'>Proslomesecni Pobednici</h2>
+              <h2 className='center'>Prošlomesečni Pobednici</h2>
               <div className='podium-image-holder'>
                 <img src={postolje} alt='postolje'></img>
               </div>
@@ -269,13 +287,14 @@ export default function Dashboard() {
         </div>
         <div className='tables'>
           <div className='scoreboard-holder'>
-            <h3>Mesecni</h3>
-            <table>
-              <tr>
-                <th>Ime</th>
-                <th>Broj Bodova</th>
-              </tr>
-                {mesecniBodovi.map((data) => {
+              <h3>Današnji</h3>
+              <table>
+                <tr>
+                  <th>Slika</th>
+                  <th>Ime</th>
+                  <th>Broj Bodova</th>
+                </tr>
+                {dnevniBodovi.map((data) => {
                   let ukupanBrojBodova = 0;
                   data.bodovi.forEach(element => {
                     ukupanBrojBodova += element.brojBodova;
@@ -283,43 +302,21 @@ export default function Dashboard() {
                   return (
                     <>
                       <tr>
+                        <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td>
                         <td key={data.id}>{data.ime}</td>
                         <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
                       </tr>
                     </>
-                    // <td key={data.ime}>{data.brojBodova}</td>
+                    // <li key={data.id}>{data.ime} {ukupanBrojBodova}</li>
                   )
                 })}
               </table>
-          </div>
+            </div>
           <div className='scoreboard-holder'>
-            <h3>Prosli mesec</h3>
+            <h3>Jučerašnji</h3>
             <table>
               <tr>
-                <th>Ime</th>
-                <th>Broj Bodova</th>
-              </tr>
-                {prosliMesecBodovi.map((data) => {
-                  let ukupanBrojBodova = 0;
-                  data.bodovi.forEach(element => {
-                    ukupanBrojBodova += element.brojBodova;
-                  });
-                  return (
-                    <>
-                      <tr>
-                        <td key={data.id}>{data.ime}</td>
-                        <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
-                      </tr>
-                    </>
-                    // <td key={data.ime}>{data.brojBodova}</td>
-                  )
-                })}
-              </table>
-          </div>
-          <div className='scoreboard-holder'>
-            <h3>Jucerasnji</h3>
-            <table>
-              <tr>
+                <th>Slika</th>
                 <th>Ime</th>
                 <th>Broj Bodova</th>
               </tr>
@@ -331,6 +328,7 @@ export default function Dashboard() {
                 return (
                   <>
                     <tr>
+                      <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td>
                       <td key={data.id}>{data.ime}</td>
                       <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
                     </tr>
@@ -341,31 +339,60 @@ export default function Dashboard() {
             </table>
           </div>
           <div className='scoreboard-holder'>
-            <h3>Dnevni</h3>
+            <h3>Mesečni</h3>
             <table>
               <tr>
+                <th>Slika</th>
                 <th>Ime</th>
                 <th>Broj Bodova</th>
               </tr>
-              {dnevniBodovi.map((data) => {
-                let ukupanBrojBodova = 0;
-                data.bodovi.forEach(element => {
-                  ukupanBrojBodova += element.brojBodova;
-                });
-                return (
-                  <>
-                    <tr>
-                      <td key={data.id}>{data.ime}</td>
-                      <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
-                    </tr>
-                  </>
-                  // <li key={data.id}>{data.ime} {ukupanBrojBodova}</li>
-                )
-              })}
-            </table>
+                {mesecniBodovi.map((data) => {
+                  let ukupanBrojBodova = 0;
+                  data.bodovi.forEach(element => {
+                    ukupanBrojBodova += element.brojBodova;
+                  });
+                  return (
+                    <>
+                      <tr>
+                        <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td>
+                        <td key={data.id}>{data.ime}</td>
+                        <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
+                      </tr>
+                    </>
+                    // <td key={data.ime}>{data.brojBodova}</td>
+                  )
+                })}
+              </table>
+          </div>
+          <div className='scoreboard-holder'>
+            <h3>Prošli mesec</h3>
+            <table>
+              <tr>
+                <th>Slika</th>
+                <th>Ime</th>
+                <th>Broj Bodova</th>
+              </tr>
+                {prosliMesecBodovi.map((data) => {
+                  let ukupanBrojBodova = 0;
+                  data.bodovi.forEach(element => {
+                    ukupanBrojBodova += element.brojBodova;
+                  });
+                  return (
+                    <>
+                      <tr>
+                        <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td>
+                        <td key={data.id}>{data.ime}</td>
+                        <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
+                      </tr>
+                    </>
+                    // <td key={data.ime}>{data.brojBodova}</td>
+                  )
+                })}
+              </table>
           </div>
         </div>
         <img src={animiraniPoklon} style={{display: 'none'}} alt='animiraniPreload'></img>
+        <Footer />
       </div>
     )
 
@@ -434,3 +461,6 @@ export default function Dashboard() {
     //     <h2>Dashboard</h2>
     // );
 }
+Dashboard.propTypes = {
+  setUser: PropTypes.func.isRequired
+};

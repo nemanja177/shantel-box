@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 axios.defaults.withCredentials = true;
 
-const SERVER_ENDPOINT = `https://bigalslist.com:8080/box/auth`;
+const SERVER_ENDPOINT = `https://kutija.net:8080/box/auth`;
 
 const LoginAPI = async (data) => {
     // const nav = useNavigate();
@@ -78,14 +78,14 @@ export default function Login({setToken}) {
             <div className="login-background">
                 <div className="login-holder">
                     <h2>Login</h2>
-                    <h4 id="loginError" className="hidden red">Pogresno korisnicko ime ili sifra</h4>
+                    <h4 id="loginError" className="hidden red">Pogrešno korisničko ime ili šifra</h4>
                     <form onSubmit={HandleSubmit}>
                         <label>
-                            <p>Korisnicko ime</p>
+                            <p>Korisničko ime</p>
                             <input type="text" onChange={e => setUserName(e.target.value)}/>
                         </label>
                         <label>
-                            <p>Sifra</p>
+                            <p>Šifra</p>
                             <input type="password" onChange={e => setPassword(e.target.value)}/>
                         </label>
                         <div className="login-button-div">

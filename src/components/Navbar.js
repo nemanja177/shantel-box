@@ -1,6 +1,6 @@
 import React from 'react';
 import {  Link } from "react-router-dom";
-import logo from '../images/logo.png';
+import logo from '../images/ShantelLogo2.png';
 
 
 
@@ -10,7 +10,7 @@ const Navbar= () =>{
     return (
     <div className='navigation'>
       <div className='nav-logo'>
-        <img src={logo} alt='logo'></img>
+        <a href='https://kutija.net/'><img src={logo} alt='logo'></img></a>
       </div>
       <div>
         <button id="mobile-nav" onClick={() => document.getElementById("nav-elements").style.width = "250px"}>☰</button>
@@ -18,7 +18,8 @@ const Navbar= () =>{
       <div id="nav-elements" className='nav-elements'>
         <p class="closebtn" onClick={() => document.getElementById("nav-elements").style.width = "0"}>×</p>
         <p>
-          <Link to="/">Home</Link>
+          {/* <Link to="/">Home</Link> */}
+          <a href='https://kutija.net'>Home</a>
         </p>
         <p>
           <Link to="/about">About</Link>

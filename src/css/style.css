@@ -7,6 +7,17 @@ body {
   text-align: center;
 }
 
+.image-center {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.flex-image-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tables {
     width: 90%;
     margin: 0 auto;
@@ -46,16 +57,25 @@ body {
 }
 
 .last-opened {
-  width: 80%;
+  width: 90%;
   margin: 2.5% auto;
   padding: 5% 5%;
   display: flex;
   font-weight: bold;
-  color: #030933;
-  background-color: #ff8c00;
+  color: white;
+  /* background-color: #ff8c00; */
+  background-color: #011c2a;
   justify-content: space-between;
-  border: 2px solid black;
+  border: 2px solid #464444;
+  /* border: 2px solid; */
+  /* border-image: url('../images/firegif.gif') 100 stretch; */
   border-radius: 100px;
+  align-items: center;
+  font-size: 16px;
+}
+
+.image-arrow-holder {
+  border: 1px solid black;
 }
 
 .winners-holder {
@@ -118,6 +138,17 @@ tr:nth-child(odd) {
   background-color: #042638;
 }
 
+tr:nth-child(2) {
+  color: gold;
+}
+
+tr:nth-child(3) {
+  color: silver;
+}
+
+tr:nth-child(4) {
+  color: #CD7F32;
+}
 .score-td {
   text-align: center;
 }
@@ -153,7 +184,7 @@ h2 {
 }
 
 .nav-logo img {
-  max-width: 100%;
+  max-width: 50%;
 }
 
 .nav-elements {
@@ -161,6 +192,7 @@ h2 {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
+  align-items: center;
 }
 
 .nav-elements a {
@@ -171,7 +203,13 @@ h2 {
 .footer {
   background-color: #0B141A;
   text-align: center;
-  color: white;
+  color: grey;
+  padding: 1.5%;
+  margin-top: 2%;
+}
+
+.footer p {
+  margin: 0;
 }
 
 .login-holder {
@@ -226,6 +264,46 @@ h2 {
 
 .closebtn {
   display: none;
+}
+
+.transparent {
+  color: transparent;
+}
+
+.small {
+  font-size: 0.5px;
+}
+
+.small-image {
+  width: 50px;
+  height: 50px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+}
+
+.clickable-pointer {
+  cursor: pointer;
+}
+
+.points-gif-holder {
+  position: relative;
+  width: 50px;
+}
+
+.firegif {
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -73%);
+}
+
+.element-bodovi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 
 @media only screen and (max-width: 475px) {
@@ -319,6 +397,6 @@ h2 {
   }
 
   .tables {
-    flex-direction: row;
+    flex-direction: column;
   }
 }

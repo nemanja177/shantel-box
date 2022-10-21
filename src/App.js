@@ -1,5 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 // import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/LoginComponent';
@@ -7,6 +8,10 @@ import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
 import Logout from './components/Logout';
 import Footer from './components/Footer';
+import { useNavigate } from "react-router-dom"
+import verifySession from './services/VerifyToken'
+import Registration from './components/Registration';
+import About from './components/About';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -17,12 +22,18 @@ function getToken() {
 
 function App() {
 
-  const token = getToken();
+  const token = getToken()
+  // const verified = verifySession.verifySession;
+  // const navigate = useNavigate();
 
+  // if( verified !== true ) {
+  //   navigate("/logout", {replace: true});
+  // }
   // if(!token) {
   //   console.log(token);
   //   return <Login setToken={getToken} />
   // }
+  // console.log("IZ APP BODIJA: " + verifySession);
     return (
       <BrowserRouter>
         <div className="App"> 
@@ -35,6 +46,8 @@ function App() {
             {/* <Route path='/register' element={<Signup />} /> */}
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/logout' element={<Logout />} />
+            <Route exact path='/register' element={<Registration />} />
+            <Route exact path='/about' element={<About />} />
             {/* <Route path="/box/login">
               <Login />
             </Route> */}
