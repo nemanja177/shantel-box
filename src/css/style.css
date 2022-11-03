@@ -49,7 +49,8 @@ body {
 .last-opened-holder {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  margin: 0 auto;
+  width: 40%;
 }
 
 .last-opened-element {
@@ -79,7 +80,82 @@ body {
 }
 
 .winners-holder {
-  width: 70%;
+  width: 100%;
+}
+
+/* .podium-image-holder img {
+  max-width: 35%;
+} */
+
+.total-winner-holder {
+  position: absolute;
+  width: 8%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.podium-image-holder {
+  position: relative;
+}
+
+.podium {
+  max-width: 35%;
+  margin-top: 14%;
+}
+
+.winner-img {
+  max-width: 100%;
+}
+
+/* .winner-img-holder {
+  width: 8%;
+  position: absolute;
+  
+} */
+
+.total-winner-holder:nth-child(2) {
+  top: 10%;
+  left: 46%;
+  /* max-height: 150px; */
+  /* overflow: hidden;
+  border: 3px solid gold;
+  border-radius: 20%; */
+}
+
+.total-winner-holder:nth-child(2) > .winner-img-holder {
+  border: 3px solid gold;
+  border-radius: 20%;
+  overflow: hidden;
+}
+
+.total-winner-holder:nth-child(3) {
+  top: 18%;
+  left: 36%;
+  /* max-height: 150px; */
+  
+}
+
+.total-winner-holder:nth-child(3) > .winner-img-holder {
+  overflow: hidden;
+  border: 3px solid silver;
+  border-radius: 20%;
+}
+
+.total-winner-holder:nth-child(4) {
+  top: 30%;
+  right: 36%;
+  /* max-height: 150px; */
+  
+}
+
+.total-winner-holder:nth-child(4) > .winner-img-holder {
+  overflow: hidden;
+  border: 3px solid #CD7F32;
+  border-radius: 20%;
+}
+
+.winner-total-points {
+  margin: 0;
 }
 
 .left-side {
@@ -92,7 +168,6 @@ body {
 }
 
 img {
-  max-width: 100%;
   height: auto;
   /* position: absolute; */
   /* top: 50%; */
@@ -165,6 +240,15 @@ h1 {
   transform: translate(-50%,-90%);
 }
 
+.special-price {
+  width: 30%;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
 h2 {
   transition: all 0.5s ease-in;
 }
@@ -173,6 +257,7 @@ h2 {
   display: flex;
   justify-content: space-around;
   background-color: #0B141A;
+  align-items: center;
 }
 
 .nav-logo {
@@ -212,35 +297,89 @@ h2 {
   margin: 0;
 }
 
+/* custom LOGIN */
+
+form .txt-field {
+  position: relative;
+  border-bottom: 2px solid #adadad;
+  margin: 30px 0;
+}
+
+.txt-field input {
+  width: 100%;
+  padding: 05px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.txt-field label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #adadad;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.txt-field span::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  width: 0;
+  height: 2px;
+  background: #2691d9;
+  transition: 0.5s;
+}
+
+.txt-field input:focus ~ label,
+.txt-field input:valid ~ label {
+  top: -5px;
+  color: #2691d9;
+}
+
+.txt-field input:focus ~ span::before,
+.txt-field input:valid ~ span::before {
+  width: 100%;
+}
+
+/* ------------ */
+
 .login-holder {
-  border: 2px solid grey;
-  border-radius: 7%;
+  /* border: 2px solid grey; */
+  border-radius: 2%;
   width: 25%;
   margin: 2% auto;
-  background-color: rgba(217, 217, 217, 0.6);
+  background-color: white;
   padding: 2%;
   color: #00004d;
 }
 
-.login-holder input {
+/* .login-holder input {
   width: 100%;
   padding: 5px 3px;
-  border-radius: 10px;
+  border: 0px;
+  border-bottom: 1px solid black;
 }
 
 .login-holder label {
   text-align: left;
-}
+} */
 
 .login-button-div {
-  margin: 5% 0% 0% 0%;
+  margin: 15% 0% 20% 0%;
   display: flex;
   justify-content: center;
   /* width: 10%; */
 }
 
 .login-button-div button {
-  padding: 2% 20%;
+  padding: 4% 20%;
   background-color: #00004d;
   border: 1px solid transparent;
   border-radius: 20px;
@@ -248,14 +387,29 @@ h2 {
 }
 
 .login-background {
-  background-image: url("../images/loginbackground.jpg");
-  background-size: cover;
+  /* background-image: url("../images/loginbackground.jpg");
+  background-size: cover; */
+  background-color: #00111a;
   margin: 0;
-  padding: 18% 0%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.login-logo-holder {
+  width: 30%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.login-logo-holder img {
+  width: 100%;
+  height: auto;
 }
 
 .already-opened-gift {
-  max-width: 50%;
+  max-width: 75%;
 }
 
 #mobile-nav {
@@ -274,10 +428,22 @@ h2 {
   font-size: 0.5px;
 }
 
+.small-img {
+  width: 0.5px;
+  height: 0.5px;
+}
+
 .small-image {
   width: 50px;
   height: 50px;
   border: 1px solid transparent;
+  border-radius: 100px;
+}
+
+.small-image-div {
+  width: 50px;
+  height: 50px;
+  background-size: cover;
   border-radius: 100px;
 }
 
@@ -299,11 +465,36 @@ h2 {
   transform: translate(50%, -73%);
 }
 
+.ice-icon {
+  position: absolute;
+  height: 50px;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.element-specijalna-nagrada {
+  position: absolute;
+  height: 50px;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
 .element-bodovi {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+}
+
+.specijalna-nagrada {
+  color: gold;
+  border: 1px solid green;
+}
+
+.news-holder ul{
+  list-style: none;
 }
 
 @media only screen and (max-width: 475px) {
@@ -342,7 +533,15 @@ h2 {
     padding-top: 60px;
     display: block;
   }
+
+  .nav-logo {
+    max-width: 20%;
+  }
   
+  .nav-logo img {
+    max-width: 100%;
+  }
+
   /* .nav-elements a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -368,10 +567,11 @@ h2 {
 
   #mobile-nav {
     display: block;
-    background-color: #111;
+    background-color: transparent;
     color: white;
     padding: 10px 15px;
     border: none;
+    font-size: 21px;
   }
 
   .navigation {
@@ -379,13 +579,14 @@ h2 {
     padding: 1%;
   }
 
+  .logo {
+    width: 100%;
+  }
+
   .login-holder {
     width: auto;
     padding: 10%;
-  }
-  
-  .login-background {
-    padding: 58% 0%;
+    margin: 0% 5%;
   }
 
   .last-opened-holder {
@@ -398,5 +599,41 @@ h2 {
 
   .tables {
     flex-direction: column;
+  }
+
+  .podium {
+    max-width: 100%;
+    margin-top: 40%;
+  }
+  
+  /* .winner-img {
+    max-width: 100%;
+  } */
+  
+  /* .winner-img-holder {
+    width: 23%;
+    position: absolute;
+  } */
+  .total-winner-holder {
+    width: 22%;
+  }
+  
+  .total-winner-holder:nth-child(2) {
+    top: 8%;
+    left: 39%;
+  }
+  
+  .total-winner-holder:nth-child(3) {
+    top: 15%;
+    left: 10%;
+  }
+  
+  .total-winner-holder:nth-child(4) {
+    top:24%;
+    right: 10%;
+  }
+
+  .clickable-pointer {
+    width: 100%;
   }
 }

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import PropTypes from 'prop-types';
+import logo from '../images/ShantelLogo2.png'
 
 axios.defaults.withCredentials = true;
 
@@ -77,23 +78,51 @@ export default function Login({setToken}) {
         return (
             <div className="login-background">
                 <div className="login-holder">
-                    <h2>Login</h2>
+                    <h2>Dobro Došli</h2>
+                    <div className="login-logo-holder">
+                        <img src={logo} alt="logo"></img>
+                    </div>
                     <h4 id="loginError" className="hidden red">Pogrešno korisničko ime ili šifra</h4>
                     <form onSubmit={HandleSubmit}>
-                        <label>
-                            <p>Korisničko ime</p>
-                            <input type="text" onChange={e => setUserName(e.target.value)}/>
-                        </label>
-                        <label>
-                            <p>Šifra</p>
-                            <input type="password" onChange={e => setPassword(e.target.value)}/>
-                        </label>
+                        <div className="txt-field">
+                            <input type="text" required />
+                            <span></span>
+                            <label>Korisničko Ime</label>
+                        </div>
+                        <div className="txt-field">
+                            <input type="password" required />
+                            <span></span>
+                            <label>Šifra</label>
+                        </div>
                         <div className="login-button-div">
-                            <button type="submit">Login</button>
+                            <button type="submit">LOGIN</button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            // <div className="login-background">
+            //     <div className="login-holder">
+            //         <h2>Login</h2>
+            //         <div className="login-logo-holder">
+            //             <img src={logo} alt="logo"></img>
+            //         </div>
+            //         <h4 id="loginError" className="hidden red">Pogrešno korisničko ime ili šifra</h4>
+            //         <form onSubmit={HandleSubmit}>
+            //             <label>
+            //                 <p>Korisničko ime</p>
+            //                 <input type="text" onChange={e => setUserName(e.target.value)}/>
+            //             </label>
+            //             <label>
+            //                 <p>Šifra</p>
+            //                 <input type="password" onChange={e => setPassword(e.target.value)}/>
+            //             </label>
+            //             <div className="login-button-div">
+            //                 <button type="submit">LOGIN</button>
+            //             </div>
+            //         </form>
+            //     </div>
+            // </div>
         )
     }
 

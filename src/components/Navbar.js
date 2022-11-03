@@ -10,7 +10,7 @@ const Navbar= () =>{
     return (
     <div className='navigation'>
       <div className='nav-logo'>
-        <a href='https://kutija.net/'><img src={logo} alt='logo'></img></a>
+        <a href='https://kutija.net/'><img src={logo} className='logo' alt='logo'></img></a>
       </div>
       <div>
         <button id="mobile-nav" onClick={() => document.getElementById("nav-elements").style.width = "250px"}>☰</button>
