@@ -95,7 +95,7 @@ export default function Login({setToken}) {
                             <label>Šifra</label>
                         </div>
                         <div className="login-button-div">
-                            <button type="submit">LOGIN</button>
+                            <button className="btn-grad" type="submit">LOGIN</button>
                         </div>
                     </form>
                 </div>

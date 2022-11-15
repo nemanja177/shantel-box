@@ -351,6 +351,7 @@ export default function Dashboard() {
               <h3>Današnji</h3>
               <table>
                 <tr>
+                  <th></th>
                   <th>Slika</th>
                   <th>Ime</th>
                   <th>Broj Bodova</th>
@@ -371,6 +372,7 @@ export default function Dashboard() {
                   return (
                     <>
                       <tr>
+                        <td></td>
                         <td className='flex-image-center'>
                           {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                           <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
@@ -388,6 +390,7 @@ export default function Dashboard() {
             <h3>Jučerašnji</h3>
             <table>
               <tr>
+                <th></th>
                 <th>Slika</th>
                 <th>Ime</th>
                 <th>Broj Bodova</th>
@@ -407,6 +410,7 @@ export default function Dashboard() {
                 return (
                   <>
                     <tr>
+                      <td></td>
                       <td className='flex-image-center'>
                         {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                         <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
@@ -424,6 +428,7 @@ export default function Dashboard() {
             <h3>Mesečni</h3>
             <table>
               <tr>
+                <th></th>
                 <th>Slika</th>
                 <th>Ime</th>
                 <th>Broj Bodova</th>
@@ -436,6 +441,7 @@ export default function Dashboard() {
                   return (
                     <>
                       <tr>
+                        <td></td>
                         {/* <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td> */}
                         <td className='flex-image-center'>
                           {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
@@ -454,6 +460,7 @@ export default function Dashboard() {
             <h3>Prošli mesec</h3>
             <table>
               <tr>
+                <th></th>
                 <th>Slika</th>
                 <th>Ime</th>
                 <th>Broj Bodova</th>
@@ -466,6 +473,7 @@ export default function Dashboard() {
                   return (
                     <>
                       <tr>
+                        <td></td>
                         <td className='flex-image-center'>
                           {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                           <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>

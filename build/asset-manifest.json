@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.955ec109.css",
-    "main.js": "/static/js/main.d80518e5.js",
+    "main.css": "/static/css/main.3590c355.css",
+    "main.js": "/static/js/main.a9acf65f.js",
     "static/js/787.a7354085.chunk.js": "/static/js/787.a7354085.chunk.js",
     "static/media/animirani2.gif": "/static/media/animirani2.95a818336bfb100eaf64.gif",
     "static/media/day-off.png": "/static/media/day-off.bc84c88c31b6423b45df.png",
@@ -14,12 +14,12 @@
     "static/media/vecOtvorenBezPozadine.png": "/static/media/vecOtvorenBezPozadine.1698a377914a03902431.png",
     "static/media/ShantelLogo2.png": "/static/media/ShantelLogo2.0200489f92115057c6bf.png",
     "index.html": "/index.html",
-    "main.955ec109.css.map": "/static/css/main.955ec109.css.map",
-    "main.d80518e5.js.map": "/static/js/main.d80518e5.js.map",
+    "main.3590c355.css.map": "/static/css/main.3590c355.css.map",
+    "main.a9acf65f.js.map": "/static/js/main.a9acf65f.js.map",
     "787.a7354085.chunk.js.map": "/static/js/787.a7354085.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.955ec109.css",
-    "static/js/main.d80518e5.js"
+    "static/css/main.3590c355.css",
+    "static/js/main.a9acf65f.js"
   ]
 }

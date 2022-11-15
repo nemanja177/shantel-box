@@ -8,10 +8,18 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
+                <h3>Verzija 1.1.0</h3>
+                <ul>
+                    <li>Dodat broj trentnog mesta u tabele</li>
+                    <li>Redizajnirana login strana</li>
+                </ul>
+            </div>
+            <div className="news-holder">
                 <h3>Verzija 1.0.0</h3>
                 <ul>
                     <li>Dodate su slike za specijalne nagrade</li>
                     <li>Sredjeni problemi sa slikama</li>
+                    <li>Sredjena navigacija na telefonima ( Povecan logo, centrirano na sredinu )</li>
                 </ul>
             </div>
             <div className="news-holder">
