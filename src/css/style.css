@@ -42,9 +42,117 @@ body {
 .right-side {
   width: 50%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
 }
+
+/* -------------------- */
+div.btn-container{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+div.btn-container i{
+  display: inline-block;
+  position: relative;
+  top: -9px;
+}
+
+label {
+  font-size: 13px;
+  color: #424242;
+  font-weight: 500;
+}
+
+.btn-display-mode-switch{
+  display: inline-block;
+  margin: 0px;
+  position: relative;
+}
+
+.btn-display-mode-switch > label.btn-display-mode-switch-inner{
+  margin: 0px;
+  width: 140px;
+  height: 30px;
+  background: #E0E0E0;
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.34) inset;*/
+  display: block;
+}
+
+.btn-display-mode-switch > label.btn-display-mode-switch-inner::before{
+  content: attr(data-on);
+  position: absolute;
+  font-size: 12px;
+  font-weight: 500;
+  top: 7px;
+  right: 20px;
+
+}
+
+.btn-display-mode-switch > label.btn-display-mode-switch-inner::after{
+  content: attr(data-off);
+  width: 70px;
+  height: 16px;
+  background: #fff;
+  border-radius: 26px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0px 0px 6px -2px #111;
+  padding: 5px 0px;
+}
+
+.btn-display-mode-switch > .alert{
+  display: none;
+  background: #FF9800;
+  border: none;
+  color: #fff;
+}
+
+.btn-display-mode-switch input[type="checkbox"]{
+  cursor: pointer;
+  width: 50px;
+  height: 25px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  margin: 0px;
+}
+
+.btn-display-mode-switch input[type="checkbox"]:checked + label.btn-display-mode-switch-inner{
+  background: #151515;
+  color: #fff;
+}
+
+.btn-display-mode-switch input[type="checkbox"]:checked + label.btn-display-mode-switch-inner:after{
+  content: attr(data-on);
+  left: 80%;
+  background: #3c3c3c;
+}
+
+.btn-display-mode-switch input[type="checkbox"]:checked + label.btn-display-mode-switch-inner:before{
+  content: attr(data-off);
+  right: auto;
+  left: 20px;
+}
+
+.btn-display-mode-switch input[type="checkbox"]:checked ~ .alert{
+  display: block;
+}
+
+.table-div-holder {
+  display: table;
+}
+
+/* -------------------- */
 
 .last-opened-holder {
   display: flex;
@@ -161,6 +269,10 @@ body {
 .left-side {
   width: 50%;
   /* position: relative; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .red {
@@ -449,6 +561,7 @@ form .txt-field {
 
 .clickable-pointer {
   cursor: pointer;
+  width: 100%;
 }
 
 .points-gif-holder {
@@ -456,21 +569,39 @@ form .txt-field {
   width: 50px;
 }
 
-.firegif {
+.icons {
   position: absolute;
-  width: 30px;
   height: 50px;
   top: 50%;
   right: 50%;
+}
+
+.ruby {
+  transform: translate(50%, -45%);
+}
+
+.tombstone {
+  transform: translate(50%,-59%);
+  width: 115%;
+  height: 60px;
+}
+
+.crownMedal {
+  transform: translate(50%,-51%);
+  height: 70px;
+}
+
+.firegif {
+  width: 30px;
   transform: translate(50%, -73%);
 }
 
 .ice-icon {
-  position: absolute;
-  height: 50px;
-  top: 50%;
-  right: 50%;
   transform: translate(50%, -50%);
+}
+
+.icecube {
+  transform: translate(50%, -50%)
 }
 
 .element-specijalna-nagrada {
@@ -479,6 +610,22 @@ form .txt-field {
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
+}
+
+.lucky {
+  background-color: darkred;
+  border: 2px solid goldenrod;
+  color: white;
+}
+
+.unlucky {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+}
+
+.unlucky .element-bodovi {
+  color: white;
 }
 
 .element-bodovi {
@@ -537,6 +684,51 @@ table tr td:first-child::before {
   text-decoration: none;
 }
 
+.no-height {
+  height: 0;
+}
+
+.bonus-users-holder {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bonus-user-holder {
+  padding: 2%;
+  border: 3px solid transparent;
+  transition: ease 0.3s;
+  width: 35%;
+  transform: scale(1.0);
+}
+
+.bonus-user-holder:hover {
+  transition: ease 0.3s;
+  border: 3px solid #464444;
+  background-color: #011c2a;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.additional-rewards-image {
+  margin: 0 auto;
+  height: 100px;
+  width: 100px;
+}
+
+.bonus-user-name {
+  margin-top: 10px;
+  font-size: 21px;
+}
+
+.last-month-title {
+  text-align: center;
+}
+
+.table-lucky {
+  background-color: darkred;
+  color: gold;
+  font-weight: bold;
+}
 
 @media only screen and (max-width: 475px) {
   .content-holder {

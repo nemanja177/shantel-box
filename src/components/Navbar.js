@@ -3,8 +3,6 @@ import {  Link } from "react-router-dom";
 import logo from '../images/ShantelLogo2.png';
 
 
-
-
 const Navbar= () =>{
     
     return (
@@ -19,13 +17,16 @@ const Navbar= () =>{
         <p class="closebtn" onClick={() => document.getElementById("nav-elements").style.width = "0"}>×</p>
         <p>
           {/* <Link to="/">Home</Link> */}
-          <a href='https://kutija.net'>Home</a>
+          <a href='https://kutija.net'>Početna</a>
         </p>
         <p>
-          <Link to="/about">About</Link>
+          <Link to="/lastMonth">Proslomesečna Rang Lista</Link>
         </p>
         <p>
-          <Link to="/logout">Logout</Link>
+          <Link to="/about">Izmene</Link>
+        </p>
+        <p>
+          <Link to="/logout">Izloguj se</Link>
         </p>
       </div>
     </div>

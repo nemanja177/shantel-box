@@ -38,7 +38,7 @@ const LoginAPI = async (data) => {
         console.log(response.data);
 
     } catch(e){
-        console.log(e);
+        console.log(e.code);
         document.getElementById('loginError').classList.remove('hidden');
     }
 }

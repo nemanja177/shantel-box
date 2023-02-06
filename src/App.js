@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom"
 import verifySession from './services/VerifyToken'
 import Registration from './components/Registration';
 import About from './components/About';
+import LastMonthComponent from './components/LastMonthComponent';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -48,6 +49,7 @@ function App() {
             <Route exact path='/logout' element={<Logout />} />
             <Route exact path='/register' element={<Registration />} />
             <Route exact path='/about' element={<About />} />
+            <Route exact path='/lastMonth' element={<LastMonthComponent />} />
             {/* <Route path="/box/login">
               <Login />
             </Route> */}

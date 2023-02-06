@@ -8,6 +8,52 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
+                <h3>Verzija 1.3.3</h3>
+                <ul>
+                    <li>Doradjen prikaz za korisnike koji su dobili specijalnu nagradu kako bi se lakse isticali na listi</li>
+                    <li>Popravljena tabla za prikaz bodova.</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.3.2</h3>
+                <ul>
+                    <li>Izmenjena tabela sa prikazom bonus bodova. Sada umesto na dnevnom pokazuje bonus bodove na mesecnom nivou</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.3.1</h3>
+                <ul>
+                    <li>Zamenjen prikaz dobijenih bodova tokom danasnjeg i jucerasnjeg broja bodova. Umesto celokupnog broja bodova koristi se sledeci format: Broj bodova iz kutije + ukupan broj bonus bodova dobijenih taj dan</li>
+                    <li>Dodat efekat prilikom odabira korisnika za dodatne bodove kao i automatsko refresovanje stranice nakon odabira korisnika</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.3.0</h3>
+                <ul>
+                    <li>Dodat sistem bonus bodova - Nakon otvaranja kutije dobijace se bonus nagrada koju je moguce dodeliti drugome</li>
+                    <li>Ukoliko se bonus ne dodeli, korisnik NECE moci da otvara kutiju sve dok to ne ucini</li>
+                    <li>Dodat sistem za zakljucavanje kutije dok se radi na njoj kako bi sprecili nezeljene situacije ( sistem je u razradi tako da ocekujte vise detalja )</li>
+                    <li>Proslomesecni bodovi su prebaceni na posebnu stranicu i nalazi se u navigaciji</li>
+                    <li>Umesto proslomesecnih bodova stavljeni su ukupni bodovi dobijeni bonusima za svakog korisnika ( broj je vec dodat na ukupne bodove dobijene u toku dana, ne sabira se dodatno ) </li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.2.0</h3>
+                <ul>
+                    <li>Dodat novogodisnji mod</li>
+                    <li>Dodat efekat padanja snega</li>
+                    <li>Promenjen limit dobijanja bodova. Dok traju praznici moguce je dobiti od -100 do 200 poena</li>
+                    <li>Dodati specijalni efekti za veliki plus i veliki minus kao i dodatne ikonice</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.1.1</h3>
+                <ul>
+                    <li>Popravljen bug sa otvaranjem kutije. Moglo se otvoriti vise puta</li>
+                    <li>Doradjen izgled za manje ekrane</li>
+                </ul>
+            </div>
+            <div className="news-holder">
                 <h3>Verzija 1.1.0</h3>
                 <ul>
                     <li>Dodat broj trentnog mesta u tabele</li>

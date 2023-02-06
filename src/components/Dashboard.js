@@ -9,6 +9,12 @@ import animiraniPoklon from '../images/animirani2.gif'
 import slikaOtvorenogPoklona from '../images/vecOtvorenBezPozadine.png';
 import firegif from '../images/firegif.gif';
 import iceIcon from '../images/iceIcon.png'
+import tombstone from '../images/tombstone.png'
+import diamond from '../images/diamond-icon.png'
+import ruby from '../images/ruby.png'
+import goldCoin from '../images/Gold-coin-icon.png'
+import crownMedal from '../images/crown-medals.png'
+import iceCube from '../images/ice-melting.png'
 import postolje from '../images/rsz_postolje.png'
 import arrowDown from '../images/arrow_down.png'
 import evri from '../images/1o-evrica.png'
@@ -20,6 +26,7 @@ import PropTypes from 'prop-types';
 axios.defaults.withCredentials = true;
 const AUTH_PATH = `https://kutija.net:8080/box/auth`;
 const SERVER_PATH = "https://kutija.net:8080/box/bodovi";
+const BONUS_PATH = "https://kutija.net:8080/box/bonusBodovi"
 const config = {headers: {"Authorization": `Bearer ${localStorage.getItem("access_token")}`, "Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}}
 
 function sleep(ms) {
@@ -35,6 +42,13 @@ async function delayedMessage(box) {
   points.classList.remove(...cls);
   point.classList.remove(...cls);
   opened.classList.remove(...cls);
+}
+
+async function displayBonusDiv() {
+  // const cls = ["hidden", "no-height"];
+  await sleep(5000);
+  // let bonusDiv = document.getElementById("bonus-holder");
+  // bonusDiv.classList.remove(...cls);
 }
 
 const validate = async() => {
@@ -69,10 +83,15 @@ export default function Dashboard() {
     const [jucerasnjiBodovi, setJucerasnjiBodovi] = useState([]);
     const [dnevniBodovi, setDnevniBodovi] = useState([]);
     const [poslednjiOtvoreni, setPoslednjiOtvoreni] = useState([]);
+    const [dnevniBonusi, setDnevniBonusi] = useState([]);
     const [dozvoljenPoklon, setDozvoljenPoklon] = useState();
     const [otvorenPoklon, setOtvorenPoklon] = useState();
+    const [dodatniBodovi, setDodatniBodovi] = useState([]);
     const [prosliMesecBodovi, setProsliMesecBodovi] = useState([]);
     const [validated, setValidated] = useState();
+    const [randomUsers, setRandomUsers] = useState();
+    const [poslatBonus, setPoslanBonus] = useState();
+    const [dataShown, setDataShown] = useState("lastOpened");
 
     // const arraySrcs = [{animiraniPoklon}]
     
@@ -99,7 +118,19 @@ export default function Dashboard() {
         setValidated(response.data);
       }
 
+      const getPoslatBonus = async () => {
+        // const response = await axios.get(`${SERVER_PATH}/hasSendGift`, config);
+        let response = await axios(`${SERVER_PATH}/hasSendGift`, {
+          method: "GET",
+          config: config,
+          withCredentials: true
+        })
+        setPoslanBonus(response.data);
+      }
+
       getValidated()
+      getRandomUsers()
+      // getPoslatBonus()
 
       const getMesecniBodovi = async () => {
         const response = await fetch(`${SERVER_PATH}/mesecni`);
@@ -124,11 +155,23 @@ export default function Dashboard() {
         
         setPoslednjiOtvoreni(await response.json());
       }
+
+      const getDodatniBodovi = async () => {
+        const response = await fetch(`${BONUS_PATH}/allMontlyBonuses`);
+
+        setDodatniBodovi(await response.json());
+      }
   
       const getProsliMesecBodovi = async () => {
         const response = await fetch(`${SERVER_PATH}/prosliMesec`);
   
         setProsliMesecBodovi(await response.json());
+      }
+
+      const getDnevniBonusi = async () => {
+        const response = await fetch(`${BONUS_PATH}/dailyRecentBonus`);
+
+        setDnevniBonusi(await response.json());
       }
   
       const getDozvoljenPoklon = async () => {
@@ -141,17 +184,22 @@ export default function Dashboard() {
         // setDozvoljenPoklon(await response)
       }
 
+     
+
       // {arraySrcs.map((e) => (
       //   <img src={e} style={{ display: "block" }} />
       // ))}
       
       // if ( localStorage.getItem("access_token") !== null && validated === true ) {
         getMesecniBodovi()
-        getJucerasnjiBodovi();
+        getJucerasnjiBodovi()
         getDnevniBodovi()
         getPoslednjiOtvoreni()
         getProsliMesecBodovi()
         getDozvoljenPoklon()
+        getDodatniBodovi()
+        getDnevniBonusi();
+        
         // console.log(dozvoljenPoklon);
       
       // } else {
@@ -161,6 +209,9 @@ export default function Dashboard() {
     }, [])
     // console.log(validated);
     // await sleep(500);
+    // console.log(poslatBonus);
+    // console.log(randomUsers);
+    // console.log(typeof(randomUsers));
     if ( localStorage.getItem("access_token") === null || validated !== true ) {
       console.log(localStorage.getItem('access_token') + " " + validated); 
       navigate("/logout", {replace: true});
@@ -183,22 +234,58 @@ export default function Dashboard() {
 
     const imageClick = async (dozvoljenPoklon) => {
       setDozvoljenPoklon(false);
-      try {
-        let response = await axios.post(`${SERVER_PATH}`, config)
-    
-        if ( response.status === 200) {
-          if ( response.data.specijalnaNagrada !== null )
-            dobijeniBodovi = response.data.specijalnaNagrada; 
-          else 
-            dobijeniBodovi = response.data.brojBodova; 
-          // dozvoljenPoklon = false;
-          //console.log(dobijeniBodovi);
+      const response = await axios.get(`${SERVER_PATH}/check`, config);
+      if ( response.data !== false ) {
+        
+        try {
+          let response = await axios.post(`${SERVER_PATH}`, config)
+          if ( response.status === 200) {
+
+            if ( response.data.specijalnaNagrada !== null )
+              dobijeniBodovi = response.data.specijalnaNagrada; 
+            else 
+              dobijeniBodovi = response.data.brojBodova; 
+            // dozvoljenPoklon = false;
+            //console.log(dobijeniBodovi);
+          }
+          getRandomUsers();
+        } catch(e){
+            console.log(e);
         }
-      } catch(e){
-          console.log(e);
       }
       // console.log("DOZVOLJEN?: IZ KLIK FUNC: ", dozvoljenPoklon);
     }
+
+    const sendBonusPoints = async (id) => {
+      const response = await axios.post(`${BONUS_PATH}/chosen/?id=${id}`, config);
+      if ( response.data !== false ) {
+        alert("Uspesno ste dali korisniku bodove");
+        // const cls = ["hidden", "no-height"];
+        // let bonusDiv = document.getElementById("bonus-holder");
+        // bonusDiv.classList.add(...cls);
+      }
+    }
+
+    const getRandomUsers = async () => {
+      // const response = await fetch(`${SERVER_PATH}/randomUsers`, config);
+      const response = await axios(`${BONUS_PATH}/randomUsers`, {
+        method: "GET",
+        config: config,
+        withCredentials: true
+      });
+      setRandomUsers(response.data);
+      displayBonusDiv();
+    }
+
+    const showLastOpened = () => {
+      setDataShown("lastOpened");
+    };
+
+    const showBonuses = () => {
+      setDataShown("bonuses");
+      console.log("BONUSI POJAVITE SE");
+      console.log(dataShown);
+    };
 
     return (
       <div>
@@ -207,7 +294,7 @@ export default function Dashboard() {
           <div className='left-side'>
             {/* <h1 id="point" className="hidden">{bodovi}</h1> */}
             <h2 id='opened' className='small transparent'>Otvorili ste poklon danas. Novi vas čeka sutra!</h2>
-            <h2 id='points' className='small transparent'>Čestitamo, dobili ste {bodovi}{isNaN(bodovi) ? '' : ' bodova!'}</h2>
+            <h2 id='points' className='small transparent'>{bodovi > 0 ? "Čestitamo" : "Nažalost"}, dobili ste {bodovi}{isNaN(bodovi) ? '' : ' bodova!'}</h2>
             {/* {dozvoljenPoklon === false &&
               <h2>
                 Otvorili ste poklon danas. Novi vas ceka sutra!
@@ -215,8 +302,8 @@ export default function Dashboard() {
             } */}
             {
               (() => {
-                if(otvorenPoklon === true ) {
-                  // console.log("DOZVOLJENO?: ", dozvoljenPoklon);
+                if(otvorenPoklon === true) {
+                // console.log("DOZVOLJENO?: ", dozvoljenPoklon);
                   return (
                     <div className='imageHolder'>
                       <img className='clickable-pointer' src={zatvorenPoklon} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
@@ -233,7 +320,7 @@ export default function Dashboard() {
                         // setDozvoljenPoklon(false);
                         // this.src = {animiraniPoklon}
                       }) : null } style={{"pointerEvents": "all"}} ></img>
-                     
+                    
                       {(() => {
                           switch(bodovi) {
                             case "Slobodan Dan": {
@@ -262,10 +349,8 @@ export default function Dashboard() {
                       {bodovi === ""
 
                       } */}
-                      
                     </div>
                   )
-                  
                 } else {
                     return (
                       <div>
@@ -290,25 +375,78 @@ export default function Dashboard() {
                 // this.src = {animiraniPoklon}
               }) } style={{"pointerEvents": "all"}} ></img>
             } */}
+            { randomUsers !== undefined && typeof(randomUsers) !== "string" &&
+            <div className='bonus-holder'>
+              <h2>Čestitamo, dobili ste dodatnu nagradu!</h2>
+              <h4>Izaberite korisnika kojem želite da da dodelite 10 bodova!</h4>
+              <p>Otvaranje nove kutije nije moguće ukoliko bonus nije nekome dodeljen!</p>
+              <div className='bonus-users-holder'>
+                {randomUsers.map((data) => {
+                  return (
+                    <div className='bonus-user-holder' onClick={() => sendBonusPoints(data.id).then(() => { 
+                      // let bonusDiv = document.getElementById("bonus-holder");
+                      window.location.reload(true);
+                    }) } style={{"pointerEvents": "all"}}>
+                      <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div additional-rewards-image'></div>
+                      <p className='bonus-user-name' key={data.id}>{data.ime}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            }
           </div>
           <div className='right-side'>
-            <div className='last-opened-holder'>
+            {/* <div className='table-div-holder'>
+              <div className="btn-container">
+                <label className="switch btn-display-mode-switch">
+                  <input type="checkbox" name="display_mode" id="display_mode" value="1" />
+                  <label for="display_mode" data-on="LastOpened" data-off="Bonuses" className="btn-display-mode-switch-inner"></label>
+                </label>
+              </div>
+            </div> */}
+            {/* <div className='button-holder'>
+              <button className='active-button' onClick={showLastOpened}>Poslednji Otvoreni Pokloni</button>
+              <button onClick={showBonuses}>Današnji Bonusi</button>
+            </div> */}
+            {dataShown == "lastOpened" && 
+              <div className='last-opened-holder'>
               {/* <h2 className='center'>Poslednji Otvoreni Pokloni</h2> */}
               <div className='flex-image-center'>
                 <img src={arrowDown} alt='poslednji otvoreni pokloni'></img>
               </div>
                 {poslednjiOtvoreni.map((data) => {
-                  console.log(data.bod.specijalnaNagrada)
+                  let addedClass = 'last-opened';
+                  if ( data.bod.specijalnaNagrada != "10 Evra" && data.bod.specijalnaNagrada != "Slobodan Dan" ) {
+                    if ( data.bod.brojBodova >= 185 ) {
+                      addedClass+= ' lucky';
+                    } else if ( data.bod.brojBodova <= -85 ) {
+                      addedClass+= ' unlucky';
+                    } 
+                  }
+                  
                   return (
-                    <div className='last-opened'>
+                    <div className={addedClass}>
                       <img className='small-image' src={data.korisnik.slika} alt='slikaKorisnika'></img>
                       <p className='last-opened-element' key={data.id}>{data.korisnik.ime}</p>
                       <div className='points-gif-holder'>
-                        {data.bod.brojBodova > 85 && 
-                          <img src={firegif} className='firegif'></img>
+                        {data.bod.brojBodova > 85 && data.bod.brojBodova <= 120 &&
+                          <img src={firegif} className='icons firegif'></img>
                         }
-                        {(data.bod.brojBodova < 15 && data.bod.specijalnaNagrada === null) &&
-                          <img src={iceIcon} alt='iceIcon' className='ice-icon'></img>                          
+                         {data.bod.brojBodova <= -20 && data.bod.brojBodova > -85 &&
+                          <img src={iceCube} className='icons icecube'></img>
+                        }
+                         {data.bod.brojBodova <= -85 && 
+                          <img src={tombstone} className='icons tombstone'></img>
+                        }
+                         {data.bod.brojBodova >= 185 && 
+                          <img src={crownMedal} className='icons crownMedal'></img>
+                        }
+                         {data.bod.brojBodova > 120 && data.bod.brojBodova < 185 &&
+                          <img src={ruby} className='icons ruby'></img>
+                        }
+                        {(data.bod.brojBodova < 15 && data.bod.specijalnaNagrada === null && data.bod.brojBodova > -20 ) &&
+                          <img src={iceIcon} alt='iceIcon' className='icons ice-icon'></img>                          
                         }
                         {data.bod.specijalnaNagrada === null &&
                           <p className='last-opened-element element-bodovi' key={data.id}>{data.bod.brojBodova}</p>
@@ -319,11 +457,29 @@ export default function Dashboard() {
                         {data.bod.specijalnaNagrada === "10 Evra" &&
                           <img src={evri} className='last-opened-element element-specijalna-nagrada' key={data.id}></img>
                         }
+                        {/* {data.bod.specijalnaNagrada == "points" && data.bod.brojBodova > 0 &&
+                          <p className='last-opened-element element-bodovi' key={data.id}>{data.bod.brojBodova}</p>
+                        } */}
                       </div>
                     </div>
                   )
                 })}
             </div>
+            } 
+            { dataShown == "bonuses" &&
+            <div>     
+              {dnevniBonusi.map((data) => {
+                console.log(data);
+                return (
+                  <div>
+                    <div style={{backgroundImage: `url(${data.sender.slika})`}} className='small-image-div'></div>
+                    <p>{data.bonusValue}</p>
+                    <div style={{backgroundImage: `url(${data.receiver.slika})`}} className='small-image-div'></div>
+                  </div>
+                )
+              })}
+            </div>
+            }   
           </div> 
         </div>
         <div className='winners-holder'>
@@ -358,20 +514,29 @@ export default function Dashboard() {
                 </tr>
                 {dnevniBodovi.map((data) => {
                   let ukupanBrojBodova = 0;
+                  let classNames = "";
+                  let bonusBodovi = 0;
                   let ispis = '';
-                  data.bodovi.forEach(element => {
-                    ukupanBrojBodova += element.brojBodova;
-                    if ( element.specijalnaNagrada !== null ) {
+                  data.bodovi.every(element => {
+                    if ( element.specijalnaNagrada === "Poeni" )
+                      bonusBodovi += element.brojBodova;
+                    else {
+                      ukupanBrojBodova += element.brojBodova
+                    }
+                    if ( element.specijalnaNagrada !== null && element.specijalnaNagrada !== "Poeni") {
                       ispis = element.specijalnaNagrada;
+                      classNames += "table-lucky";
+                      return false;
                     }
                     else {
-                      ispis = ukupanBrojBodova;
+                      ispis = ukupanBrojBodova + " + " + bonusBodovi;
+                      return true;
                     }
                   });
                   //let url = `https://kutija.net/images/` + data.slika;
                   return (
                     <>
-                      <tr>
+                      <tr className={classNames}>
                         <td></td>
                         <td className='flex-image-center'>
                           {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
@@ -397,19 +562,28 @@ export default function Dashboard() {
               </tr>
               {jucerasnjiBodovi.map((data) => {
                  let ukupanBrojBodova = 0;
+                 let bonusBodovi = 0;
+                 let classNames = "";
                  let ispis = '';
-                 data.bodovi.forEach(element => {
-                   ukupanBrojBodova += element.brojBodova;
-                   if ( element.specijalnaNagrada !== null ) {
-                     ispis = element.specijalnaNagrada;
-                   }
-                   else {
-                     ispis = ukupanBrojBodova;
-                   }
-                 });
+                 data.bodovi.every(element => {
+                 if ( element.specijalnaNagrada === "Poeni" )
+                    bonusBodovi += element.brojBodova;
+                  else {
+                    ukupanBrojBodova += element.brojBodova
+                  }
+                  if ( element.specijalnaNagrada !== null && element.specijalnaNagrada !== "Poeni") {
+                    ispis = element.specijalnaNagrada;
+                    classNames += "table-lucky";
+                    return false;
+                  }
+                  else {
+                    ispis = ukupanBrojBodova + " + " + bonusBodovi;
+                    return true;
+                  }
+                });
                 return (
                   <>
-                    <tr>
+                    <tr className={classNames}>
                       <td></td>
                       <td className='flex-image-center'>
                         {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
@@ -457,7 +631,7 @@ export default function Dashboard() {
               </table>
           </div>
           <div className='scoreboard-holder'>
-            <h3>Prošli mesec</h3>
+            <h3>Ukupni Bonus Bodovi u Mesecu</h3>
             <table>
               <tr>
                 <th></th>
@@ -465,7 +639,7 @@ export default function Dashboard() {
                 <th>Ime</th>
                 <th>Broj Bodova</th>
               </tr>
-                {prosliMesecBodovi.map((data) => {
+                {dodatniBodovi.map((data) => {
                   let ukupanBrojBodova = 0;
                   data.bodovi.forEach(element => {
                     ukupanBrojBodova += element.brojBodova;
@@ -475,15 +649,12 @@ export default function Dashboard() {
                       <tr>
                         <td></td>
                         <td className='flex-image-center'>
-                          {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                           <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                         </td>
-                        {/* <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td> */}
                         <td key={data.id}>{data.ime}</td>
-                        <td className='score-td' key={data.id}>{ukupanBrojBodova}</td>
+                        <td className='score-td' key={data.id}>+{ukupanBrojBodova}</td>
                       </tr>
                     </>
-                    // <td key={data.ime}>{data.brojBodova}</td>
                   )
                 })}
               </table>
