@@ -4,6 +4,7 @@ import bonusArrow from '../images/right-arrow.png'
 import unknownUser from '../images/whiteQuestion.png'
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { trackPromise } from 'react-promise-tracker';
 axios.defaults.withCredentials = true;
 
 const BONUS_PATH = "https://kutija.net:8080/box/bonusBodovi"
@@ -32,11 +33,10 @@ export default function Bonuses() {
             })
             setYesterdayBonuses(response.data);
         }
-
-        getDnevniBonusi();
-        getJucerasnjiBodovi();
+        trackPromise(getDnevniBonusi())
+        trackPromise(getJucerasnjiBodovi())
         
-    }, [dailyBonuses]);
+    }, []);
 
     
 
@@ -89,7 +89,7 @@ export default function Bonuses() {
                     })}
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

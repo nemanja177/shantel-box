@@ -1,13 +1,48 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { usePromiseTracker } from "react-promise-tracker";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Footer from './components/Footer';
+import {LineWave, Circles, ThreeCircles} from 'react-loader-spinner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const LoadingIndicator = props => {
+  const { promiseInProgress } = usePromiseTracker();
+
+  return (
+    promiseInProgress &&
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "15% 0%"
+      }}>
+      <ThreeCircles
+        height="150"
+        width="150"
+        color="#fcba03"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="three-circles-rotating"
+        outerCircleColor=""
+        innerCircleColor=""
+        middleCircleColor=""
+      />
+    </div>
+  );  
+}
 root.render(
   <React.StrictMode>
     <App />
+    <LoadingIndicator/>
+    <Footer />
   </React.StrictMode>
 );
 
