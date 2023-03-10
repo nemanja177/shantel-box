@@ -13,6 +13,8 @@ import verifySession from './services/VerifyToken'
 import Registration from './components/Registration';
 import About from './components/About';
 import LastMonthComponent from './components/LastMonthComponent';
+import Bonuses from './components/Bonuses';
+import RangList from './components/RangList';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -50,6 +52,8 @@ function App() {
             <Route exact path='/register' element={<Registration />} />
             <Route exact path='/about' element={<About />} />
             <Route exact path='/lastMonth' element={<LastMonthComponent />} />
+            <Route exact path='/bonuses' element={<Bonuses />} />
+            <Route exact path='/ranglist' element={<RangList />} />
             {/* <Route path="/box/login">
               <Login />
             </Route> */}

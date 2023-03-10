@@ -8,6 +8,13 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
+                <h3>Verzija 1.4</h3>
+                <ul>
+                    <li>Dodat pregled poslednjih 10 dodeljenih bonus bodova</li>
+                    <li>Dodato dugme koje omogucava biranje izmedju dva pregleda: poslednje dobijeni bodovi i bonusi</li>
+                </ul>
+            </div>
+            <div className="news-holder">
                 <h3>Verzija 1.3.3</h3>
                 <ul>
                     <li>Doradjen prikaz za korisnike koji su dobili specijalnu nagradu kako bi se lakse isticali na listi</li>

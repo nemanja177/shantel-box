@@ -17,6 +17,8 @@ import crownMedal from '../images/crown-medals.png'
 import iceCube from '../images/ice-melting.png'
 import postolje from '../images/rsz_postolje.png'
 import arrowDown from '../images/arrow_down.png'
+import bonusArrow from '../images/right-arrow.png'
+import unknownUser from '../images/whiteQuestion.png'
 import evri from '../images/1o-evrica.png'
 import dayoff from '../images/day-off.png'
 import Navbar from './Navbar';
@@ -91,7 +93,10 @@ export default function Dashboard() {
     const [validated, setValidated] = useState();
     const [randomUsers, setRandomUsers] = useState();
     const [poslatBonus, setPoslanBonus] = useState();
-    const [dataShown, setDataShown] = useState("lastOpened");
+    // const [dataShown, setDataShown] = useState("lastOpened");
+    const [dataShown, setDataShown] = useState(false);
+
+    const [unopenedUsers, setUnopenedUsers] = useState([]);
 
     // const arraySrcs = [{animiraniPoklon}]
     
@@ -184,6 +189,12 @@ export default function Dashboard() {
         // setDozvoljenPoklon(await response)
       }
 
+      const getUnopenedUsers = async () => {
+        const response = await fetch(`${SERVER_PATH}/userswhodidntnopen`);
+  
+        setUnopenedUsers(await response.json());
+      }
+
      
 
       // {arraySrcs.map((e) => (
@@ -191,14 +202,16 @@ export default function Dashboard() {
       // ))}
       
       // if ( localStorage.getItem("access_token") !== null && validated === true ) {
-        getMesecniBodovi()
-        getJucerasnjiBodovi()
+
+        // getMesecniBodovi()
+        // getJucerasnjiBodovi()
         getDnevniBodovi()
         getPoslednjiOtvoreni()
-        getProsliMesecBodovi()
+        // getProsliMesecBodovi()
         getDozvoljenPoklon()
         getDodatniBodovi()
-        getDnevniBonusi();
+        getDnevniBonusi()
+        getUnopenedUsers();
         
         // console.log(dozvoljenPoklon);
       
@@ -277,15 +290,20 @@ export default function Dashboard() {
       displayBonusDiv();
     }
 
-    const showLastOpened = () => {
-      setDataShown("lastOpened");
+
+    const handleChange = () => {
+      setDataShown(!dataShown);
     };
 
-    const showBonuses = () => {
-      setDataShown("bonuses");
-      console.log("BONUSI POJAVITE SE");
-      console.log(dataShown);
-    };
+    // const showLastOpened = () => {
+    //   setDataShown("lastOpened");
+    // };
+
+    // const showBonuses = () => {
+    //   setDataShown("bonuses");
+    //   console.log("BONUSI POJAVITE SE");
+    //   console.log(dataShown);
+    // };
 
     return (
       <div>
@@ -376,7 +394,7 @@ export default function Dashboard() {
               }) } style={{"pointerEvents": "all"}} ></img>
             } */}
             { randomUsers !== undefined && typeof(randomUsers) !== "string" &&
-            <div className='bonus-holder'>
+            <div className='select-bonus-holder'>
               <h2>Čestitamo, dobili ste dodatnu nagradu!</h2>
               <h4>Izaberite korisnika kojem želite da da dodelite 10 bodova!</h4>
               <p>Otvaranje nove kutije nije moguće ukoliko bonus nije nekome dodeljen!</p>
@@ -397,24 +415,24 @@ export default function Dashboard() {
             }
           </div>
           <div className='right-side'>
-            {/* <div className='table-div-holder'>
+            <div className='table-div-holder'>
               <div className="btn-container">
                 <label className="switch btn-display-mode-switch">
-                  <input type="checkbox" name="display_mode" id="display_mode" value="1" />
-                  <label for="display_mode" data-on="LastOpened" data-off="Bonuses" className="btn-display-mode-switch-inner"></label>
+                  <input type="checkbox" name="display_mode" id="display_mode" checked={dataShown} onChange={handleChange} />
+                  <label for="display_mode" data-on="Bonusi" data-off="Poslednje Otvoreni" className="btn-display-mode-switch-inner"></label>
                 </label>
               </div>
-            </div> */}
+            </div>
             {/* <div className='button-holder'>
               <button className='active-button' onClick={showLastOpened}>Poslednji Otvoreni Pokloni</button>
               <button onClick={showBonuses}>Današnji Bonusi</button>
             </div> */}
-            {dataShown == "lastOpened" && 
+            {dataShown === false && 
               <div className='last-opened-holder'>
               {/* <h2 className='center'>Poslednji Otvoreni Pokloni</h2> */}
-              <div className='flex-image-center'>
+              {/* <div className='flex-image-center'>
                 <img src={arrowDown} alt='poslednji otvoreni pokloni'></img>
-              </div>
+              </div> */}
                 {poslednjiOtvoreni.map((data) => {
                   let addedClass = 'last-opened';
                   if ( data.bod.specijalnaNagrada != "10 Evra" && data.bod.specijalnaNagrada != "Slobodan Dan" ) {
@@ -427,7 +445,8 @@ export default function Dashboard() {
                   
                   return (
                     <div className={addedClass}>
-                      <img className='small-image' src={data.korisnik.slika} alt='slikaKorisnika'></img>
+                      <div style={{backgroundImage: `url(${data.korisnik.slika})`}} className='small-image-div'></div>
+                      {/* <img className='small-image' src={data.korisnik.slika} alt='slikaKorisnika'></img> */}
                       <p className='last-opened-element' key={data.id}>{data.korisnik.ime}</p>
                       <div className='points-gif-holder'>
                         {data.bod.brojBodova > 85 && data.bod.brojBodova <= 120 &&
@@ -466,15 +485,24 @@ export default function Dashboard() {
                 })}
             </div>
             } 
-            { dataShown == "bonuses" &&
-            <div>     
+            { dataShown === true &&
+            <div className='bonus-total-holder'>     
               {dnevniBonusi.map((data) => {
-                console.log(data);
+                // console.log(data);
+                let receiverImage;
+                if (data.receiver === null ) { 
+                  receiverImage = unknownUser;
+                } else {
+                  receiverImage = data.receiver.slika;
+                }
                 return (
-                  <div>
+                  <div className='bonus-holder' >
                     <div style={{backgroundImage: `url(${data.sender.slika})`}} className='small-image-div'></div>
-                    <p>{data.bonusValue}</p>
-                    <div style={{backgroundImage: `url(${data.receiver.slika})`}} className='small-image-div'></div>
+                    <div className='bonus-info'>
+                      <p>{data.value} Poena</p>
+                      <img src={bonusArrow} className='bonusArrow'></img>
+                    </div>
+                    <div style={{backgroundImage: `url(${receiverImage})`}} className='small-image-div'></div>
                   </div>
                 )
               })}
@@ -482,7 +510,18 @@ export default function Dashboard() {
             }   
           </div> 
         </div>
-        <div className='winners-holder'>
+        <h3 className='center'>Ljudi koji danas još nisu otvorili kutiju</h3>
+        <div className='unopened-users'>
+          {unopenedUsers.map((data) => {
+            console.log(data);
+            return (
+              <div className='unopened-user-image'>
+                <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
+              </div>
+            )
+          })}
+        </div>
+        {/* <div className='winners-holder'>
           <h2 className='center'>Prošlomesečni Pobednici</h2>
           <div className='podium-image-holder'>
             <img className='podium' src={postolje} alt='postolje'></img>
@@ -539,7 +578,7 @@ export default function Dashboard() {
                       <tr className={classNames}>
                         <td></td>
                         <td className='flex-image-center'>
-                          {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
+                          // <img src={data.slika} className='small-image' alt='slika'></img>
                           <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                         </td>
                         <td key={data.id}>{data.ime}</td>
@@ -586,7 +625,6 @@ export default function Dashboard() {
                     <tr className={classNames}>
                       <td></td>
                       <td className='flex-image-center'>
-                        {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                         <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                       </td>
                       <td key={data.id}>{data.ime}</td>
@@ -616,9 +654,7 @@ export default function Dashboard() {
                     <>
                       <tr>
                         <td></td>
-                        {/* <td className='flex-image-center'><img src={data.slika} className='small-image' alt='slika'></img></td> */}
                         <td className='flex-image-center'>
-                          {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                           <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                         </td>
                         <td key={data.id}>{data.ime}</td>
@@ -659,7 +695,7 @@ export default function Dashboard() {
                 })}
               </table>
           </div>
-        </div>
+        </div> */}
         <img src={animiraniPoklon} style={{display: 'none'}} alt='animiraniPreload'></img>
         <Footer />
       </div>
