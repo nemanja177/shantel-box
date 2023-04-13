@@ -1,6 +1,7 @@
 import React from 'react';
 import {  Link } from "react-router-dom";
-import logo from '../images/ShantelLogo2.png';
+import logo from '../images/ShantelLogo2.png'; // normal
+import logoEaster from '../images/ShantelLogoEaster.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -9,7 +10,7 @@ const Navbar= () =>{
     return (
     <div className='navigation'>
       <div className='nav-logo'>
-        <a href='https://kutija.net/'><img src={logo} className='logo' alt='logo'></img></a>
+        <a href='https://kutija.net/'><img src={logoEaster} className='logo' alt='logo'></img></a>
       </div>
       <div>
         <button id="mobile-nav" onClick={() => document.getElementById("nav-elements").style.width = "250px"}>☰</button>

@@ -8,6 +8,14 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
+                <h3>Verzija 2.0</h3>
+                <ul>
+                    <li>Izmenjen dizajn aplikacije. Podeljena u segmente kojima se moze pristupiti preko gornje navigacije</li>
+                    <li>Dodat uskrsnji mod! Promenjen logo, kutija se pretvorila u magicno jaje a rang liste su dobile novi okvir!</li>
+                    <li>Tokom uskrsnjih praznika nije moguce dobiti ispod 100 bodova. Raspon dobijenih bodova smanjen, sad je minimum 100 a maksimum 200 bodova</li>
+                </ul>
+            </div>
+            <div className="news-holder">
                 <h3>Verzija 1.4</h3>
                 <ul>
                     <li>Dodat pregled poslednjih 10 dodeljenih bonus bodova</li>

@@ -207,7 +207,7 @@ export default function RangList() {
                     </table>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

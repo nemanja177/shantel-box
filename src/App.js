@@ -15,6 +15,7 @@ import About from './components/About';
 import LastMonthComponent from './components/LastMonthComponent';
 import Bonuses from './components/Bonuses';
 import RangList from './components/RangList';
+import { useEffect } from 'react';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -26,6 +27,13 @@ function getToken() {
 function App() {
 
   const token = getToken()
+
+  // const [currentUser, setCurrentUser] = useState(undefined);
+
+  // useEffect(() => {
+    
+  // })
+
   // const verified = verifySession.verifySession;
   // const navigate = useNavigate();
 

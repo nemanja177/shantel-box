@@ -2,11 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import '../css/style.css';
-import zatvorenPoklon from '../images/111.png'
+import zatvorenPoklon from '../images/111.png' // 1
 // import zatvorenPoklon from '../images/rsz_poklonzatvorenbezpozadine.png';
-import animiraniPoklon from '../images/animirani2.gif'
+import animiraniPoklon from '../images/animirani2.gif' // 2
 // import animiraniPoklon from '../images/smanjenAnimiran-bezPozadine.gif';
-import slikaOtvorenogPoklona from '../images/vecOtvorenBezPozadine.png';
+import slikaOtvorenogPoklona from '../images/vecOtvorenBezPozadine.png'; // 3
+
+// easter-egg 
+
+import animiranoJaje from '../images/animatedegg.gif';
+import zatvorenoJaje from '../images/closedegg.png';
+import otvorenoJaje from '../images/openedegg.png';
+
+// ------------
 import firegif from '../images/firegif.gif';
 import iceIcon from '../images/iceIcon.png'
 import tombstone from '../images/tombstone.png'
@@ -37,7 +45,7 @@ function sleep(ms) {
 
 async function delayedMessage(box) {
   const cls = ["transparent", "small", "small-img"];
-  await sleep(3800);
+  await sleep(3000); // 3800
   let points = document.getElementById("points");
   let point = document.getElementById("point");
   let opened = document.getElementById("opened");
@@ -324,9 +332,9 @@ export default function Dashboard() {
                 // console.log("DOZVOLJENO?: ", dozvoljenPoklon);
                   return (
                     <div className='imageHolder'>
-                      <img className='clickable-pointer' src={zatvorenPoklon} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
+                      <img className='clickable-pointer' src={zatvorenoJaje} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
                         let box = document.getElementById("box");
-                        box.setAttribute('src', animiraniPoklon);
+                        box.setAttribute('src', animiranoJaje);
                         
                         // sleep(2000).then(()=>{
                         //   console.log('you can see me after 2000 milliseconds');
@@ -373,7 +381,7 @@ export default function Dashboard() {
                     return (
                       <div>
                         <h2>Već ste otvorili poklon danas. Novi vas čeka sutra!</h2>
-                        <img src={slikaOtvorenogPoklona} className='already-opened-gift' alt='otvorenPoklon'></img>
+                        <img src={otvorenoJaje} className='already-opened-gift' alt='zatvorena-kutija'></img>
                       </div>
                     )
                   }
@@ -697,7 +705,7 @@ export default function Dashboard() {
           </div>
         </div> */}
         <img src={animiraniPoklon} style={{display: 'none'}} alt='animiraniPreload'></img>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     )
 

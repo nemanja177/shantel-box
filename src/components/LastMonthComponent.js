@@ -82,7 +82,7 @@ export default function LastMonthComponent() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

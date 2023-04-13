@@ -33,9 +33,9 @@ export default function Bonuses() {
             })
             setYesterdayBonuses(response.data);
         }
-        trackPromise(getDnevniBonusi())
-        trackPromise(getJucerasnjiBodovi())
-        
+        getDnevniBonusi();
+        getJucerasnjiBodovi();
+        trackPromise(getDnevniBonusi());
     }, []);
 
     
