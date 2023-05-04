@@ -45,7 +45,7 @@ function sleep(ms) {
 
 async function delayedMessage(box) {
   const cls = ["transparent", "small", "small-img"];
-  await sleep(3000); // 3800
+  await sleep(3800); // 3800
   let points = document.getElementById("points");
   let point = document.getElementById("point");
   let opened = document.getElementById("opened");
@@ -141,7 +141,7 @@ export default function Dashboard() {
         setPoslanBonus(response.data);
       }
 
-      getValidated()
+      getValidated() // enabled
       getRandomUsers()
       // getPoslatBonus()
 
@@ -233,6 +233,9 @@ export default function Dashboard() {
     // console.log(poslatBonus);
     // console.log(randomUsers);
     // console.log(typeof(randomUsers));
+
+
+    // enabled --------------------------------------------------------------------
     if ( localStorage.getItem("access_token") === null || validated !== true ) {
       console.log(localStorage.getItem('access_token') + " " + validated); 
       navigate("/logout", {replace: true});
@@ -332,9 +335,9 @@ export default function Dashboard() {
                 // console.log("DOZVOLJENO?: ", dozvoljenPoklon);
                   return (
                     <div className='imageHolder'>
-                      <img className='clickable-pointer' src={zatvorenoJaje} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
+                      <img className='clickable-pointer' src={zatvorenPoklon} id='box' alt='zatvorenPoklon' onClick={dozvoljenPoklon ? () => imageClick(dozvoljenPoklon).then(() => {
                         let box = document.getElementById("box");
-                        box.setAttribute('src', animiranoJaje);
+                        box.setAttribute('src', animiraniPoklon);
                         
                         // sleep(2000).then(()=>{
                         //   console.log('you can see me after 2000 milliseconds');
@@ -381,7 +384,7 @@ export default function Dashboard() {
                     return (
                       <div>
                         <h2>Već ste otvorili poklon danas. Novi vas čeka sutra!</h2>
-                        <img src={otvorenoJaje} className='already-opened-gift' alt='zatvorena-kutija'></img>
+                        <img src={slikaOtvorenogPoklona} className='already-opened-gift' alt='zatvorena-kutija'></img>
                       </div>
                     )
                   }

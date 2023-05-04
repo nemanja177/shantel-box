@@ -9,6 +9,7 @@ async function verifySession() {
       config: config,
       withCredentials: true
     })
+
     // console.log("IZ APP.JS-a: " + response.data);
     return response.data;
 }

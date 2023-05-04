@@ -8,7 +8,16 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
-                <h3>Verzija 2.0</h3>
+                <h3>Verzija 1.51</h3>
+                <ul>
+                    <li>Sredjen izgled aplikacije za telefon. Velicina broja bodova kao i slicice ljudi za odabir bonus bodova su smanjene. 
+                        Lista ljudi koji nisu otvorili kutiju se sad pravi u vise redova</li>
+                    <li>Promenjen iznos dodanih bodova koji se dodeljuju sa 10 na 20</li>
+                    <li>Sklonjen uskrsnji mod. Bodovi vraceni na stari opseg</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.5</h3>
                 <ul>
                     <li>Izmenjen dizajn aplikacije. Podeljena u segmente kojima se moze pristupiti preko gornje navigacije</li>
                     <li>Dodat uskrsnji mod! Promenjen logo, kutija se pretvorila u magicno jaje a rang liste su dobile novi okvir!</li>

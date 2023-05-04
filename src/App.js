@@ -16,6 +16,7 @@ import LastMonthComponent from './components/LastMonthComponent';
 import Bonuses from './components/Bonuses';
 import RangList from './components/RangList';
 import { useEffect } from 'react';
+import PrivateRoute from './components/PrivateRoute';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -31,7 +32,8 @@ function App() {
   // const [currentUser, setCurrentUser] = useState(undefined);
 
   // useEffect(() => {
-    
+      /* ovde napraviti servis koji proverava da li je token ispravan, odnosno da li uopste postoji. 
+      Dobija se status kod sa bekenda i prosledjuje se na glavnu stranu gde se, u zavisnost od status koda, redirektuje na odredjenu stranicu */
   // })
 
   // const verified = verifySession.verifySession;
@@ -53,7 +55,19 @@ function App() {
         } */}
           <Routes>
             {/* <Route path="/box/login" component = {LoginCompoment} exact/> */}
+
+            {/* <Route exact path='/' element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+              } 
+            /> */}
+
+
             <Route exact path='/' element={<Dashboard />} />
+
+
+
             {/* <Route path='/register' element={<Signup />} /> */}
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/logout' element={<Logout />} />
