@@ -331,6 +331,10 @@ label {
   color: red;
 }
 
+.green {
+  color: green;
+}
+
 img {
   height: auto;
   /* position: absolute; */
@@ -628,6 +632,13 @@ form .txt-field {
   border-radius: 100px;
 }
 
+.medium-image-div {
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  border-radius: 10px;
+}
+
 .clickable-pointer {
   cursor: pointer;
   width: 100%;
@@ -747,7 +758,23 @@ table tr td:first-child::before {
   cursor: pointer;
 }
 
-.btn-grad:hover {
+.btn-grad-2 {
+  background-image: linear-gradient(to right, #1A0E00 0%, #182848  51%, #1A0E00  100%);
+  margin: 10px auto;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  border: 2px solid #464444;
+  color: white;            
+  border-radius: 50px;
+  display: block;
+  cursor: pointer;;
+
+}
+
+.btn-grad:hover, .btn-grad-2:hover {
   background-position: right center;
   color: #fff;
   text-decoration: none;
@@ -811,6 +838,41 @@ table tr td:first-child::before {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.giftcode-main-holder {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: 50vh;
+}
+
+.gift-code-activate-holder {
+  width: 50%;
+}
+
+.gift-code-generate {
+  width: 50%;
+}
+
+.gift-code-input {
+  width: 90%;
+  height: 30px;
+  margin: 2% 0%;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.gift-code-title {
+  font-size: 30px;
+  margin-top: 5%;
 }
 
 @media only screen and (max-width: 475px) {

@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Footer from './components/Footer';
 import {LineWave, Circles, ThreeCircles} from 'react-loader-spinner';
+import Navbar from './components/Navbar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

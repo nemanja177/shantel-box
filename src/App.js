@@ -17,6 +17,7 @@ import Bonuses from './components/Bonuses';
 import RangList from './components/RangList';
 import { useEffect } from 'react';
 import PrivateRoute from './components/PrivateRoute';
+import GiftCode from './components/GiftCode';
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
@@ -76,6 +77,7 @@ function App() {
             <Route exact path='/lastMonth' element={<LastMonthComponent />} />
             <Route exact path='/bonuses' element={<Bonuses />} />
             <Route exact path='/ranglist' element={<RangList />} />
+            <Route exact path='/giftcode' element={<GiftCode />} />
             {/* <Route path="/box/login">
               <Login />
             </Route> */}

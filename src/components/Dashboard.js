@@ -407,7 +407,7 @@ export default function Dashboard() {
             { randomUsers !== undefined && typeof(randomUsers) !== "string" &&
             <div className='select-bonus-holder'>
               <h2>Čestitamo, dobili ste dodatnu nagradu!</h2>
-              <h4>Izaberite korisnika kojem želite da da dodelite 10 bodova!</h4>
+              <h4>Izaberite korisnika kojem želite da da dodelite 20 bodova!</h4>
               <p>Otvaranje nove kutije nije moguće ukoliko bonus nije nekome dodeljen!</p>
               <div className='bonus-users-holder'>
                 {randomUsers.map((data) => {
@@ -524,7 +524,6 @@ export default function Dashboard() {
         <h3 className='center'>Ljudi koji danas još nisu otvorili kutiju</h3>
         <div className='unopened-users'>
           {unopenedUsers.map((data) => {
-            console.log(data);
             return (
               <div className='unopened-user-image'>
                 <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
