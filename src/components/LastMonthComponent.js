@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import postolje from '../images/rsz_postolje.png'
 
-const SERVER_PATH = "https://kutija.net:8080/box/bodovi";
+const SERVER_PATH = "https://api.kutija.net/box/bodovi";
 const config = {headers: {"Authorization": `Bearer ${localStorage.getItem("access_token")}`, "Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}}
 
 export default function LastMonthComponent() {

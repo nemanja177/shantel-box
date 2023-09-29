@@ -13,7 +13,7 @@ function sleep(ms) {
 
 const logoutAPI = async (navigate) => {
     // const history = useHistory();
-    let response = await axios.get("https://kutija.net:8080/box/auth/logout")
+    let response = await axios.get("https://api.kutija.net/box/auth/logout")
 
     if ( response.status === 200 ) {
         localStorage.clear();

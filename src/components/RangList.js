@@ -2,10 +2,18 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+import zvezda from '../images/prva-zvezda.png';
+import dvezvezde from '../images/druga-zvezda.png';
+import trizvezde from '../images/treca-zvezda.png';
+import cetrizvezde from '../images/cetvrta-zvezda.png';
+import petzvezda from '../images/peta-zvezda.png';
+
+import kartica from '../images/giftcode-icon.png';
+
 import React, { useEffect, useState } from 'react';
 
-const SERVER_PATH = "https://kutija.net:8080/box/bodovi";
-const BONUS_PATH = "https://kutija.net:8080/box/bonusBodovi"
+const SERVER_PATH = "https://api.kutija.net/box/bodovi";
+const BONUS_PATH = "https://api.kutija.net/box/bonusBodovi";
 
 export default function RangList() {
 
@@ -53,30 +61,65 @@ export default function RangList() {
                     <h3>Današnji</h3>
                     <table>
                         <tr>
-                        <th></th>
-                        <th>Slika</th>
-                        <th>Ime</th>
-                        <th>Broj Bodova</th>
+                            <th></th>
+                            <th>Slika</th>
+                            <th>Ime</th>
+                            <th>Broj Bodova</th>
                         </tr>
                         {dnevniBodovi.map((data) => {
                         let ukupanBrojBodova = 0;
                         let classNames = "";
-                        let bonusBodovi = 0;
+                        // let bonusBodovi = 0;
+                        let brojBonusBodova = 0;
+                        let poklonKodBodovi = 0;
                         let ispis = '';
+                        let ispisSlika = undefined;
+                        let klasaSlike = 'bonus-points-star';
                         data.bodovi.every(element => {
-                            console.log(data.bodovi);
                             if ( element.specijalnaNagrada === "Poeni" )
-                                bonusBodovi += element.brojBodova;
-                            else {
-                                ukupanBrojBodova += element.brojBodova
+                                // bonusBodovi += element.brojBodova;
+                                brojBonusBodova += 1;
+                            else if ( element.specijalnaNagrada === "Gift" ){
+                                poklonKodBodovi += element.brojBodova;
+                            } else {
+                                ukupanBrojBodova += element.brojBodova;
                             }
-                            if ( element.specijalnaNagrada !== null && element.specijalnaNagrada !== "Poeni") {
+                            if ( element.specijalnaNagrada === "10 Evra") {
                                 ispis = element.specijalnaNagrada;
                                 classNames += "table-lucky";
                                 return false;
                             }
                             else {
-                                ispis = ukupanBrojBodova + " + " + bonusBodovi;
+                                ispis = <span className='table-image-holder'>{ukupanBrojBodova} + {poklonKodBodovi} <img className='bonus-gift-card' src={kartica}></img></span>;
+                                switch (brojBonusBodova) {
+                                    case 1: {
+                                        ispisSlika = zvezda;
+                                        klasaSlike = "prva-zvezda";
+                                        break;
+                                    }
+                                    case 2: {
+                                        ispisSlika = dvezvezde;
+                                        klasaSlike = "druga-zvezda";
+                                        break;
+                                    }
+                                    case 3: {
+                                        ispisSlika = trizvezde;
+                                        klasaSlike = "treca-zvezda";
+                                        break;
+                                    }
+                                    case 4: {
+                                        ispisSlika = cetrizvezde;
+                                        klasaSlike = "cetvrta-zvezda";
+                                        break;
+                                    }
+                                    case 5: {
+                                        ispisSlika = petzvezda;
+                                        klasaSlike = "peta-zvezda";
+                                        break;
+                                    }
+                                    default:
+                                        break;
+                                }
                                 return true;
                             }
                         });
@@ -89,7 +132,16 @@ export default function RangList() {
                                 {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                                 <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                                 </td>
-                                <td key={data.id}>{data.ime}</td>
+                                <td key={data.id}>
+                                    <div className='name-holder'>
+                                        {data.ime}
+                                        {ispisSlika != undefined &&
+                                            <>
+                                                <img src={ispisSlika} className={klasaSlike}></img>
+                                            </>
+                                        }
+                                    </div>
+                                </td>
                                 <td className='score-td' key={data.id}>{ispis}</td>
                             </tr>
                             </>
@@ -109,22 +161,58 @@ export default function RangList() {
                     </tr>
                     {jucerasnjiBodovi.map((data) => {
                         let ukupanBrojBodova = 0;
-                        let bonusBodovi = 0;
                         let classNames = "";
+                        // let bonusBodovi = 0;
+                        let brojBonusBodova = 0;
+                        let poklonKodBodovi = 0;
                         let ispis = '';
+                        let ispisSlika = undefined;
+                        let klasaSlike = 'bonus-points-star';
                         data.bodovi.every(element => {
                             if ( element.specijalnaNagrada === "Poeni" )
-                                bonusBodovi += element.brojBodova;
-                            else {
-                                ukupanBrojBodova += element.brojBodova
-                            }
-                            if ( element.specijalnaNagrada !== null && element.specijalnaNagrada !== "Poeni") {
+                                // bonusBodovi += element.brojBodova;
+                                brojBonusBodova += 1;
+                            else if ( element.specijalnaNagrada === "Gift" ){
+                                    poklonKodBodovi += element.brojBodova;
+                                } else {
+                                    ukupanBrojBodova += element.brojBodova;
+                                }
+                            if ( element.specijalnaNagrada === "10 Evra" ) {
                                 ispis = element.specijalnaNagrada;
                                 classNames += "table-lucky";
                                 return false;
                             }
                             else {
-                                ispis = ukupanBrojBodova + " + " + bonusBodovi;
+                                ispis = <span className='table-image-holder'>{ukupanBrojBodova} + {poklonKodBodovi} <img className='bonus-gift-card' src={kartica}></img></span>;
+                                switch (brojBonusBodova) {
+                                    case 1: {
+                                        ispisSlika = zvezda;
+                                        klasaSlike = "prva-zvezda";
+                                        break;
+                                    }
+                                    case 2: {
+                                        ispisSlika = dvezvezde;
+                                        klasaSlike = "druga-zvezda";
+                                        break;
+                                    }
+                                    case 3: {
+                                        ispisSlika = trizvezde;
+                                        klasaSlike = "treca-zvezda";
+                                        break;
+                                    }
+                                    case 4: {
+                                        ispisSlika = cetrizvezde;
+                                        klasaSlike = "cetvrta-zvezda";
+                                        break;
+                                    }
+                                    case 5: {
+                                        ispisSlika = petzvezda;
+                                        klasaSlike = "peta-zvezda";
+                                        break;
+                                    }
+                                    default:
+                                        break;
+                                }
                                 return true;
                             }
                         });
@@ -136,7 +224,16 @@ export default function RangList() {
                                 {/* <img src={data.slika} className='small-image' alt='slika'></img> */}
                                 <div style={{backgroundImage: `url(${data.slika})`}} className='small-image-div'></div>
                             </td>
-                            <td key={data.id}>{data.ime}</td>
+                            <td key={data.id}>
+                                <div className='name-holder'>
+                                    {data.ime}
+                                    {ispisSlika != undefined &&
+                                        <>
+                                            <img src={ispisSlika} className={klasaSlike}></img>
+                                        </>
+                                    }
+                                </div>
+                            </td>
                             <td className='score-td' key={data.id}>{ispis}</td>
                             </tr>
                         </>

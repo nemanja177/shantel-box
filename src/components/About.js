@@ -8,6 +8,32 @@ export default function About() {
             <Navbar/>
             <h2 className="center">Novosti</h2>
             <div className="news-holder">
+                <h3>Verzija 1.53</h3>
+                <ul>
+                    <il>Dodat novi način dobijanja bodova, preko poklon kodova! Svaki dan moguće je dobiti poklon kod koji šaljete određenoj osobi</il>
+                    <li>Svaki poklon kod može da nosi od -10 do 30 bodova, i fiksnih 30 bodova za osobu koja je generisala bod ( NAPOMENA: Fiksnih 30 bodova se dobija samo ukoliko je poklon kod iskorisćen )</li>
+                    <li>Dodati negativni poeni za svakog ko ne otvori kutiju. Na dnevnom nivou po -200 bodova</li>
+                    <h4>Rang Lista</h4>
+                    <li>Izmenjen dizajn rang liste. Umesto ukupnog broja bodova dobijenih bonus bodovima dobijace se zvezdice</li>
+                    <li>Svaka zvezdica oznacava 20 bodova i bice prikazana pored imena svakog korisnika</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.52a</h3>
+                <ul>
+                    <il>Opseg dobijanja bodova je vracen na -100 do 200</il>
+                    <li>Smanjeni bonus bodovi sa 30 na 20</li>
+                </ul>
+            </div>
+            <div className="news-holder">
+                <h3>Verzija 1.52</h3>
+                <ul>
+                    <il>Tokom avgusta meseca nije moguce dobiti minus bodove!</il>
+                    <il>Opseg dobijanja bodova je 0-200</il>
+                    <li>Takodje isto tokom trajanja avgusta meseca povecani bonus bodovi (20 -> 30)</li>
+                </ul>
+            </div>
+            <div className="news-holder">
                 <h3>Verzija 1.51</h3>
                 <ul>
                     <li>Sredjen izgled aplikacije za telefon. Velicina broja bodova kao i slicice ljudi za odabir bonus bodova su smanjene. 

@@ -7,7 +7,7 @@ import Footer from './Footer';
 import { trackPromise } from 'react-promise-tracker';
 axios.defaults.withCredentials = true;
 
-const BONUS_PATH = "https://kutija.net:8080/box/bonusBodovi"
+const BONUS_PATH = "https://api.kutija.net/box/bonusBodovi"
 
 const config = {headers: {"Authorization": `Bearer ${localStorage.getItem("access_token")}`, "Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}}
 export default function Bonuses() {

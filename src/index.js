@@ -8,7 +8,12 @@ import Footer from './components/Footer';
 import {LineWave, Circles, ThreeCircles} from 'react-loader-spinner';
 import Navbar from './components/Navbar';
 
+// import { createStore } from 'redux';
+// import rootReducer from './redux/reducer.js';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// const store = createStore(rootReducer);
 
 const LoadingIndicator = props => {
   const { promiseInProgress } = usePromiseTracker();
@@ -41,7 +46,9 @@ const LoadingIndicator = props => {
 }
 root.render(
   <React.StrictMode>
-    <App />
+    {/* <Provider store={store}> */}
+      <App />
+    {/* </Provider> */}
     <LoadingIndicator/>
     <Footer />
   </React.StrictMode>

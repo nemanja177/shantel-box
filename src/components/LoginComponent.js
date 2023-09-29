@@ -6,75 +6,118 @@ import logo from '../images/ShantelLogo2.png'
 
 axios.defaults.withCredentials = true;
 
-const SERVER_ENDPOINT = `https://kutija.net:8080/box/auth`;
+const SERVER_ENDPOINT = `https://api.kutija.net/box/auth`;
 
-const LoginAPI = async (data) => {
-    // const nav = useNavigate();
-    // console.log(data);
-    const LOGIN_ENDPOINT = `${SERVER_ENDPOINT}/login`;
-    const config = {headers: {"Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"} }
 
-    try {
 
-        let response = await axios.post(LOGIN_ENDPOINT, data);
-        // console.log(response.status + " " + response.data.accessToken + " " + response.data.expiresIn + " " + response.data.id );
+
+// const HandleSubmit = async e => {
+   
+//     e.preventDefault();
+//     let info = {
+//         username: e.target[0].value,
+//         password: e.target[1].value
+//     };
+//     await LoginAPI(info);
+    
+//     // if (localStorage.getItem("access_token") !== null) {
+//     //     Redirect()
+//     // } else {
+//     //     alert("Pogresan username ili sifra");
+//     // }
+// }
+
+
+export default function Login({setToken}) {
+
+    const nav = useNavigate();
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState(null);
+    const [maintenance, setMaintenance] = useState(null);
+
+    const HandleSubmit = async e => {
+        setError(null);
+        setMaintenance(null);
+        e.preventDefault();
+        let data = {
+            username: e.target[0].value,
+            password: e.target[1].value
+        };
+        // const nav = useNavigate();
+        // console.log(data);
+        const LOGIN_ENDPOINT = `${SERVER_ENDPOINT}/login`;
+        const config = {headers: {"Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"} }
+        let response = await axios.post(LOGIN_ENDPOINT, data)
+            .catch(error => {
+                if ( error.response ) {
+                    const statusCode = error.response.status;
+                    switch (statusCode) {
+                        case 423: {
+                            setMaintenance(error.response.data);
+                            break;
+                        }
+                        case 403: {
+                            setError("Pogrešno korisničko ime ili šifra"); 
+                            break;
+                        }
+                    }
+                }
+            });
+            // console.log(response.status + " " + response.data.accessToken + " " + response.data.expiresIn + " " + response.data.id );
         if(response.status === 200 && response.data.accessToken && response.data.expiresIn){
             let accessToken = response.data.accessToken;
             let expire_at = response.data.expiresIn;
             let id = response.data.id;
-            // console.log(accessToken + " " + expire_at + " " + id );
+                // console.log(accessToken + " " + expire_at + " " + id );
             localStorage.setItem("access_token", accessToken);
             localStorage.setItem("expire_at", expire_at);
-            // const nav = useNavigate();
-            // nav("/box", {replace: true});
-            // Login();
-            document.getElementById('loginError').classList.add('hidden');
+                // const nav = useNavigate();
+                // nav("/box", {replace: true});
+                // Login();
+                // document.getElementById('loginError').classList.add('hidden'); ////
             window.location.reload();
-        } else {
-            // console.log("lavor");
-            // document.getElementById('loginError').classList.remove('hidden');
         }
-        
-        console.log(response.data);
+        // else if (response.status === 423) {
 
-    } catch(e){
-        console.log(e.code);
-        document.getElementById('loginError').classList.remove('hidden');
+        //     setMaintenance(response.data);
+        //     // console.log("lavor");
+        //     // document.getElementById('loginError').classList.remove('hidden');
+        // } else {
+        //     setError("Pogrešno korisničko ime ili šifra");
+        // }
+            
+            console.log(response.data);
+        //  catch(e){
+        //     console.log(e.code);
+        //     // document.getElementById('loginError').classList.remove('hidden');
+        // }
     }
-}
 
-
-const HandleSubmit = async e => {
-   
-    e.preventDefault();
-    let info = {
-        username: e.target[0].value,
-        password: e.target[1].value
-    };
-    await LoginAPI(info);
-    
-    // if (localStorage.getItem("access_token") !== null) {
-    //     Redirect()
-    // } else {
-    //     alert("Pogresan username ili sifra");
-    // }
-}
-
-
-export default function Login({setToken}) {
-    const nav = useNavigate();
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
-    const [error, setError] = useState();
-        useEffect(() => {
-            if ( localStorage.getItem("access_token") !== null ) { 
-                nav("/", {replace: true});
-            }
-        });
+    useEffect(() => {
+        if ( localStorage.getItem("access_token") !== null ) { 
+            nav("/", {replace: true});
+        }
+    });
         // useState(() => {
             
         // })
-        
+        if ( maintenance != null ) {
+            const dataStartObject = new Date(maintenance.dateStart);
+            const dataEndObject = new Date(maintenance.dateEnd);
+
+            const startYear = dataStartObject.getFullYear();
+            const startMonth = dataStartObject.getMonth() + 1; 
+            const startDay = dataStartObject.getDate();
+            const startHour = dataStartObject.getHours();
+            const startMinute = dataStartObject.getMinutes();
+
+            const endYear = dataEndObject.getFullYear();
+            const endMonth = dataEndObject.getMonth() + 1; 
+            const endDay = dataEndObject.getDate();
+            const endHour = dataEndObject.getHours();
+            const endMinute = dataEndObject.getMinutes();
+        }        
         return (
             <div className="login-background">
                 <div className="login-holder">
@@ -82,7 +125,19 @@ export default function Login({setToken}) {
                     <div className="login-logo-holder">
                         <img src={logo} alt="logo"></img>
                     </div>
-                    <h4 id="loginError" className="hidden red">Pogrešno korisničko ime ili šifra</h4>
+                    {error != undefined && 
+                        <>
+                            <h4 className="red">{error}</h4>
+                        </>
+                    }
+                    {maintenance != undefined &&
+                        <>
+                            <h4 className="red">{maintenance.message}</h4>
+                            <h4 className="red">Od {maintenance.dateStart} do {maintenance.dateEnd}</h4>
+                        </>
+                    }
+                    
+                    {/* <h4 id="loginError" className="hidden red">Pogrešno korisničko ime ili šifra</h4> */}
                     <form onSubmit={HandleSubmit}>
                         <div className="txt-field">
                             <input type="text" required />

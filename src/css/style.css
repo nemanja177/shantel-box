@@ -442,7 +442,7 @@ h2 {
 }
 
 .nav-elements {
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
@@ -637,6 +637,7 @@ form .txt-field {
   height: 200px;
   background-size: cover;
   border-radius: 10px;
+  margin: 0 auto;
 }
 
 .clickable-pointer {
@@ -722,6 +723,7 @@ form .txt-field {
 
 .news-holder ul{
   list-style: none;
+  padding: 0;
 }
 
 table {
@@ -848,7 +850,7 @@ table tr td:first-child::before {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 50vh;
+  padding: 2% 0%;
 }
 
 .gift-code-activate-holder {
@@ -873,6 +875,69 @@ table tr td:first-child::before {
 .gift-code-title {
   font-size: 30px;
   margin-top: 5%;
+}
+
+.gift-code-hr {
+  width: 5%;
+  margin: 0 auto;
+  border: 1px solid #daa520;
+}
+
+.table-image-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+/* .table-image-holder div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.bonus-points-star {
+  max-width: 30px;
+  height: 100%;
+}
+
+.bonus-gift-card {
+  max-width: 25px;
+  height: 100%;
+}
+/* zvezde */
+.prva-zvezda {
+  max-width: 17px;
+}
+.druga-zvezda {
+  max-width: 35px;
+}
+.treca-zvezda {
+  max-width: 45px;
+}
+.cetvrta-zvezda {
+  max-width: 55px;
+}
+.peta-zvezda {
+  max-width: 70px;
+}
+/* ------------------ */
+
+.name-holder {
+  display: flex;
+  align-items: center;
+}
+
+.success {
+  font-size: 30px;
+  font-weight: bold;
+  color: green;
+}
+
+.failure {
+  font-size: 30px;
+  font-weight: bold;
+  color: red;
 }
 
 @media only screen and (max-width: 475px) {
@@ -1043,5 +1108,27 @@ table tr td:first-child::before {
 
   .h2 {
     font-size: 8vh;
+  }
+
+  .giftcode-main-holder {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+  } 
+  .gift-code-activate-holder {
+    width: 100%;
+    margin: 5% 0%;
+  }
+  
+  .gift-code-hr {
+    width: 50%;
+  }
+  
+  .gift-code-generate {
+    width: 100%;
+  }
+
+  .medium-image-div {
+    margin: 5% auto;
   }
 }

@@ -34,9 +34,9 @@ import Footer from './Footer';
 import PropTypes from 'prop-types';
 
 axios.defaults.withCredentials = true;
-const AUTH_PATH = `https://kutija.net:8080/box/auth`;
-const SERVER_PATH = "https://kutija.net:8080/box/bodovi";
-const BONUS_PATH = "https://kutija.net:8080/box/bonusBodovi"
+const AUTH_PATH = `https://api.kutija.net/box/auth`;
+const SERVER_PATH = "https://api.kutija.net/box/bodovi";
+const BONUS_PATH = "https://api.kutija.net/box/bonusBodovi"
 const config = {headers: {"Authorization": `Bearer ${localStorage.getItem("access_token")}`, "Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}}
 
 function sleep(ms) {
@@ -198,9 +198,17 @@ export default function Dashboard() {
       }
 
       const getUnopenedUsers = async () => {
+        // let token = localStorage.getItem("access_token");
+        // let response = await axios(`${SERVER_PATH}/userswhodidntnopen`, {
+        //   method: "GET",
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`
+        //   }
+        // })
         const response = await fetch(`${SERVER_PATH}/userswhodidntnopen`);
   
         setUnopenedUsers(await response.json());
+        // setUnopenedUsers(response.data);
       }
 
      

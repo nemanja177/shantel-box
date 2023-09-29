@@ -3,7 +3,7 @@ import { useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { uploadImage } from "../services/ImageUploadService";
 
-const SERVER_ENDPOINT = `https://kutija.net:8080/box/auth`;
+const SERVER_ENDPOINT = `https://api.kutija.net/box/auth`;
 
 const RegisterAPI = async (data) => {
     // const nav = useNavigate();
@@ -56,7 +56,7 @@ export default function Registration() {
         e.preventDefault();
         const imageData = new FormData();
         imageData.append('imageFile', e.target.files[0]);
-        const response = await axios.post(`https://kutija.net:8080/box/upload/image`, imageData, {
+        const response = await axios.post(`https://api.kutija.net/box/upload/image`, imageData, {
             onUploadProgress:progressEvent => {
             console.log("Uploading : " + ((progressEvent.loaded / progressEvent.total) * 100).toString() + "%")
             }

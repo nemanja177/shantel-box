@@ -1,15 +1,37 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
+import { useNavigate } from "react-router-dom"
+import { trackPromise } from 'react-promise-tracker';
 
-
+const AUTH_PATH = `https://api.kutija.net/box/auth`;
 export default function GiftCode() {
 
+  const [validated, setValidated] = useState();
+
+  let token = localStorage.getItem("access_token");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getValidated = async () => {
+      let response = await axios(`${AUTH_PATH}/validate2?token=` + token, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
+        withCredentials: true
+      })
+      console.log("VALIDIRANO?: " + response.data);
+      setValidated(response.data);
+    }
+
+    trackPromise(getValidated());
+  })
     
 const sendGiftCode = async(info) => {
-  let token = localStorage.getItem("access_token");
     try {
-      let response = await axios(`https://kutija.net:8080/box/giftCode/activateCode`, {
+      let response = await axios(`https://api.kutija.net/box/giftCode/activateCode`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -30,7 +52,7 @@ const sendGiftCode = async(info) => {
 const receiveGiftCode = async() => {
   let token = localStorage.getItem("access_token");
   try {
-    let response = await axios(`https://kutija.net:8080/box/giftCode/getCode`, {
+    let response = await axios(`https://api.kutija.net/box/giftCode/getCode`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`
@@ -71,28 +93,38 @@ const receiveGiftCode = async() => {
     //   textColor = "red";
     // }
 
+    if ( localStorage.getItem("access_token") === null || validated !== true ) {
+      console.log(localStorage.getItem('access_token') + " " + validated); 
+      navigate("/logout", {replace: true});
+    }
+
     return (
       <>
       <Navbar />
         <h2 className='gift-code-title'>Poklon Kodovi</h2>
+        <hr className='gift-code-hr' />
+        <p className='center'>Kodovi donose između -10 i 30 bodova. Osoba koja generiše kod dobija 30 ukoliko se generisani kod iskoristi!</p>
         <div className='giftcode-main-holder'>
           <div className='gift-code-activate-holder'>
               <h3>Ovde možete uneti dobijeni poklon kod</h3>
+              <hr className='gift-code-hr' />
               <form onSubmit={HandleSubmit}>
                 <input className='gift-code-input' type="text" required placeholder='Poklon Kod'></input>
                 <button className='btn-grad-2' type='submit'>Aktiviraj poklon kod</button>
               </form>
-              { console.log(giftCodeData) }
               {giftCodeData != undefined &&
                 <>
                 {(() => {
+                  let classes = "gift-code-response ";
                   let returnString = "";
-                  if (giftCodeData != null) {
+                  if (giftCodeData) {
                     returnString = `Iskoristili ste vaš poklon kod i ${giftCodeData.numberOfPoints > 0 ? "dobili" : "izgubili"} ste ${giftCodeData.numberOfPoints} bodova!`;
+                    classes += "success"
                   } else {
                     returnString = "Uneti kod nije validan ili je istekao!";
+                    classes += "failure"
                   }
-                  return <p className='gift-code-response'>{returnString}</p>
+                  return <p className={classes}>{returnString}</p>
                 })()}
                 </>
               }
@@ -103,7 +135,7 @@ const receiveGiftCode = async() => {
             <button className='btn-grad-2' onClick={receiveGiftCode}>Prikaži Kod</button>
             {generatedCodeData != undefined &&
             <>
-              
+              <hr className='gift-code-hr' />
               {/* <img className='gift-code' src={generatedCodeData.receiver.slika}></img> */}
               <div style={{backgroundImage: `url(${generatedCodeData.receiver.slika})`}} className='medium-image-div'></div>
               <h3>Bonus Kod: </h3>
@@ -114,15 +146,16 @@ const receiveGiftCode = async() => {
                 if (generatedCodeData.isValid === true && generatedCodeData.activatedDate === null) {
                   response = "VALIDAN";
                   textColor = "green";
-                } else if( generatedCodeData.activatedDate !== null && generatedCodeData.isValid === false) {
+                } else if ( generatedCodeData.activatedDate !== null && generatedCodeData.isValid === false) {
                   response = "ISKORIŠĆEN";
                   textColor = "red";
                 } else if ( generatedCodeData.isValid === false && generatedCodeData.activatedDate === null) {
                   response = "ISTEKAO";
                   textColor = "red";
                 }
-                return <h4 className={textColor}>Status: {response}</h4>
+                return <h2 className={textColor}>Status: {response}</h2>
               })()}   
+              
             </>
             }
           </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { trackPromise } from 'react-promise-tracker';
 
-const AUTH_PATH = `https://kutija.net:8080/box/auth`;
+const AUTH_PATH = `https://api.kutija.net/box/auth`;
 
 const config = {
     headers: {

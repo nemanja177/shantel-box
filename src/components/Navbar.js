@@ -19,7 +19,7 @@ const Navbar= () =>{
         <p class="closebtn" onClick={() => document.getElementById("nav-elements").style.width = "0"}>×</p>
         <p className='nav-element'>
           {/* <Link to="/">Home</Link> */}
-          <a href='https://kutija.net'><FontAwesomeIcon icon={solid('house')} /> Početna</a>
+          <Link to='/'><FontAwesomeIcon icon={solid('house')} /> Početna</Link>
         </p>
         <p className='nav-element'>
           <Link to="/ranglist"><FontAwesomeIcon icon={solid("ranking-star")} />  Rang Lista</Link>
@@ -32,6 +32,9 @@ const Navbar= () =>{
         </p>
         <p className='nav-element'>
           <Link to="/about"><FontAwesomeIcon icon={solid("clipboard-list")} />  Izmene</Link>
+        </p>
+        <p className='nav-element'>
+          <Link to="/giftcode"><FontAwesomeIcon icon={solid("barcode")} />  Poklon Kodovi</Link>
         </p>
         <p className='nav-element'>
           <Link to="/logout"><FontAwesomeIcon icon={solid("arrow-right-from-bracket")} /> Izloguj se</Link>
