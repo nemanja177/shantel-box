@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import { useNavigate } from "react-router-dom"
-import { trackPromise } from 'react-promise-tracker';
+import clipboard from 'clipboard-copy';
+
 
 const AUTH_PATH = `https://api.kutija.net/box/auth`;
 export default function GiftCode() {
 
   const [validated, setValidated] = useState();
+  const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPoints, setShowPoints] = useState(false);
 
   let token = localStorage.getItem("access_token");
 
@@ -26,10 +30,22 @@ export default function GiftCode() {
       setValidated(response.data);
     }
 
-    trackPromise(getValidated());
+    getValidated();
   })
+
+const handleCopyClick = async () => {
+    try {
+      let code = document.getElementById('gift-code').innerHTML;
+      await clipboard(code);
+      setCopied(true);
+    } catch (error) {
+      console.error('Failed to copy text: ', error);
+    }
+  };
     
 const sendGiftCode = async(info) => {
+    setIsLoading(true);
+    
     try {
       let response = await axios(`https://api.kutija.net/box/giftCode/activateCode`, {
         method: "POST",
@@ -39,17 +55,21 @@ const sendGiftCode = async(info) => {
         data: info
       });
       //   console.log(response.data);
-      if ( response.data != null) {
+      if ( response.data != null && response.data != false) {
         setGiftCodeData(response.data);
+        document.getElementById('activate-code-button').innerHTML = "Aktivirano";
       } else {
         setGiftCodeData(false);
+        setIsLoading(false);
       }
     } catch(e) {
       console.log(e);
     }
+    
   }
 
 const receiveGiftCode = async() => {
+  setIsLoading(true);
   let token = localStorage.getItem("access_token");
   try {
     let response = await axios(`https://api.kutija.net/box/giftCode/getCode`, {
@@ -61,6 +81,7 @@ const receiveGiftCode = async() => {
     if ( response.status != null) {
       setGeneratedCodeData(response.data);
     } 
+    setIsLoading(false);
     // else {
     //   setGeneratedCodeData("Bonus kod je vec generisan danas. Pokusajte sutra!");
     // }
@@ -100,17 +121,18 @@ const receiveGiftCode = async() => {
 
     return (
       <>
-      <Navbar />
-        <h2 className='gift-code-title'>Poklon Kodovi</h2>
+        <Navbar />
+        <h3 className='gift-code-title'>Poklon Kodovi</h3>
+        {/* <h3 </h3> */}
         <hr className='gift-code-hr' />
-        <p className='center'>Kodovi donose između -10 i 30 bodova. Osoba koja generiše kod dobija 30 ukoliko se generisani kod iskoristi!</p>
+        <p className='center'>Kodovi donose između -10 i 30 bodova. Osoba koja generiše kod dobija isto bodova kao i osoba koja aktivira ukoliko se generisani kod iskoristi!</p>
         <div className='giftcode-main-holder'>
           <div className='gift-code-activate-holder'>
               <h3>Ovde možete uneti dobijeni poklon kod</h3>
               <hr className='gift-code-hr' />
               <form onSubmit={HandleSubmit}>
                 <input className='gift-code-input' type="text" required placeholder='Poklon Kod'></input>
-                <button className='btn-grad-2' type='submit'>Aktiviraj poklon kod</button>
+                <button disabled={isLoading} id="activate-code-button" className='btn-grad-2' type='submit'>Aktiviraj poklon kod</button>
               </form>
               {giftCodeData != undefined &&
                 <>
@@ -132,34 +154,53 @@ const receiveGiftCode = async() => {
           <div className='gift-code-generate'>
             <h3>Generisanje novog poklon koda</h3>
             <p>Ovde možete videti vaš poklon kod koji dajete osobi na slici</p>
-            <button className='btn-grad-2' onClick={receiveGiftCode}>Prikaži Kod</button>
+            <button disabled={isLoading} className='btn-grad-2' onClick={receiveGiftCode}>Prikaži Kod</button>
             {generatedCodeData != undefined &&
             <>
               <hr className='gift-code-hr' />
+              {/* <h3>{generatedCodeData.receiver.ime}</h3> */}
               {/* <img className='gift-code' src={generatedCodeData.receiver.slika}></img> */}
               <div style={{backgroundImage: `url(${generatedCodeData.receiver.slika})`}} className='medium-image-div'></div>
               <h3>Bonus Kod: </h3>
-              <h2>{generatedCodeData.bonusCode}</h2>
+              <h2 id="gift-code">{generatedCodeData.bonusCode}</h2>
+              <button className='btn-grad-2' onClick={handleCopyClick}>
+                {copied ? 'Kopirano!' : 'Kopiraj Kod'}
+              </button>
               {(() => {
                 let response = ''; 
+                let responseText = '';
+                let responsePointsColor = '';
                 let textColor = '';
                 if (generatedCodeData.isValid === true && generatedCodeData.activatedDate === null) {
-                  response = "VALIDAN";
+                  response = "VALIDAN";     
                   textColor = "green";
                 } else if ( generatedCodeData.activatedDate !== null && generatedCodeData.isValid === false) {
                   response = "ISKORIŠĆEN";
+                  responseText = `Vaš kod je aktiviran i ${generatedCodeData.numberOfPoints >= 0 ? "dobili" : "izgubili"} ste ${generatedCodeData.numberOfPoints} bodova!`;
                   textColor = "red";
+                  console.log(generatedCodeData);
+                  if ( generatedCodeData.numberOfPoints > 0 )
+                    responsePointsColor = 'green';
+                  else 
+                    responsePointsColor = 'red';
                 } else if ( generatedCodeData.isValid === false && generatedCodeData.activatedDate === null) {
                   response = "ISTEKAO";
                   textColor = "red";
                 }
-                return <h2 className={textColor}>Status: {response}</h2>
-              })()}   
-              
-            </>
+                return (
+                  <>
+                    <h2 className={responsePointsColor}>{responseText}</h2>
+                    {/* {showPoints && (
+                      <h2 className='gift-points'>{generatedCodeData.randomPoints > 0 ? 'Dobijeno ' : 'Izgubljeno '}bodova: <span className={generatedCodeData.randomPoints > 0 ? 'green' : 'red'}>{generatedCodeData.randomPoints}</span></h2>
+                    )} */}
+                    <h2 className={textColor}>Status: {response}</h2>
+                  </>
+                )
+              })()}
+              </>
             }
           </div>
         </div> 
       </>
     )
-};
+}

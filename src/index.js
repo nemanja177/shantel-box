@@ -50,7 +50,7 @@ root.render(
       <App />
     {/* </Provider> */}
     <LoadingIndicator/>
-    <Footer />
+    {/* <Footer /> */}
   </React.StrictMode>
 );
 

@@ -7,6 +7,7 @@ import dvezvezde from '../images/druga-zvezda.png';
 import trizvezde from '../images/treca-zvezda.png';
 import cetrizvezde from '../images/cetvrta-zvezda.png';
 import petzvezda from '../images/peta-zvezda.png';
+import kruna from '../images/purple-crown.png';
 
 import kartica from '../images/giftcode-icon.png';
 
@@ -91,6 +92,7 @@ export default function RangList() {
                             }
                             else {
                                 ispis = <span className='table-image-holder'>{ukupanBrojBodova} + {poklonKodBodovi} <img className='bonus-gift-card' src={kartica}></img></span>;
+                                // console.log(brojBonusBodova);
                                 switch (brojBonusBodova) {
                                     case 1: {
                                         ispisSlika = zvezda;
@@ -115,6 +117,11 @@ export default function RangList() {
                                     case 5: {
                                         ispisSlika = petzvezda;
                                         klasaSlike = "peta-zvezda";
+                                        break;
+                                    }
+                                    case 6: {
+                                        ispisSlika = kruna;
+                                        klasaSlike = "kruna";
                                         break;
                                     }
                                     default:

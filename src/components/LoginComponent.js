@@ -65,10 +65,10 @@ export default function Login({setToken}) {
                 }
             });
             // console.log(response.status + " " + response.data.accessToken + " " + response.data.expiresIn + " " + response.data.id );
-        if(response.status === 200 && response.data.accessToken && response.data.expiresIn){
-            let accessToken = response.data.accessToken;
-            let expire_at = response.data.expiresIn;
-            let id = response.data.id;
+        if(response.status === 200 && response.data.userTokenState.accessToken && response.data.userTokenState.expiresIn){
+            let accessToken = response.data.userTokenState.accessToken;
+            let expire_at = response.data.userTokenState.expiresIn;
+            // let id = response.data.id;
                 // console.log(accessToken + " " + expire_at + " " + id );
             localStorage.setItem("access_token", accessToken);
             localStorage.setItem("expire_at", expire_at);

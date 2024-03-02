@@ -78,12 +78,13 @@ function App() {
             <Route exact path='/bonuses' element={<Bonuses />} />
             <Route exact path='/ranglist' element={<RangList />} />
             <Route exact path='/giftcode' element={<GiftCode />} />
+            {/* <Route exact path='/snow' element={<Snow />} /> */}
             {/* <Route path="/box/login">
               <Login />
             </Route> */}
           </Routes>
         </div> 
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     );
   }
